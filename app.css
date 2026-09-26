@@ -1,0 +1,529 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later
+   Copyright (C) 2026 Criptonautas */
+/* REGISTRO DE TRADES — styles. Loaded by index.html; no build step. */
+
+/* Inter Tight, from the criptonautas.co Headline theme (SIL OFL 1.1, fonts/OFL.txt).
+   Three static files cover the whole UI: each face claims a weight *range*, so
+   the 500 and 700 used across the stylesheet map to 600 and 800 predictably
+   instead of the browser guessing toward the heavier file. */
+@font-face{font-family:"Inter Tight";font-style:normal;font-weight:100 500;font-display:swap;
+  src:url("fonts/inter-tight-400.woff2") format("woff2")}
+@font-face{font-family:"Inter Tight";font-style:normal;font-weight:501 700;font-display:swap;
+  src:url("fonts/inter-tight-600.woff2") format("woff2")}
+@font-face{font-family:"Inter Tight";font-style:normal;font-weight:701 1000;font-display:swap;
+  src:url("fonts/inter-tight-800.woff2") format("woff2")}
+
+/* Palette paired with the criptonautas.co Headline theme: its orange in light, its
+   purple in dark. --acc is for solid fills that carry white text; --acc-txt is the
+   same hue adjusted to pass WCAG AA wherever the colour is drawn onto a surface
+   (text, borders, focus rings). Surfaces stay F Trader's own for contrast. */
+/* light by default */
+:root{
+  --bg:#f6f7f9; --panel:#fff; --panel2:#f0f2f6; --calc:#f4f6fa;
+  --line:#dfe3ea; --line2:#c9d0dc;
+  --txt:#1b1f28; --dim:#616b7d; --acc:#d14806; --acc-txt:#c34306; --ok:#15803d; --bad:#c02b3a; --warn:#a16207;
+  --barra:rgba(255,255,255,.85); --sombra:0 1px 3px rgba(16,20,30,.07);
+  --bad-borde:rgba(192,43,58,.55); --acc-suave:rgba(209,72,6,0.09); --acc-tenue:rgba(209,72,6,0.07);
+  --acc-fuerte:#b83f05; --btn-hover:#e3e7ee;
+  --radius:0.375rem;
+}
+/* dark: follow the system, unless overridden to light */
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme=light]){
+    --bg:#0d0f14; --panel:#1e2532; --panel2:#2a323f; --calc:#181d27;
+    --line:#3a4356; --line2:#4e5871;
+    --txt:#e8eaf0; --dim:#8d95a8; --acc:#5107ed; --acc-txt:#b080fd; --ok:#3fb96b; --bad:#e05561; --warn:#e0b155;
+    --barra:rgba(13,15,20,.88); --sombra:0 1px 3px rgba(0,0,0,.4);
+    --bad-borde:rgba(224,85,97,.6); --acc-suave:rgba(81,7,237,0.18); --acc-tenue:rgba(81,7,237,0.12);
+  --acc-fuerte:#621af8; --btn-hover:#1e2532;
+  }
+}
+/* explicit override to dark */
+:root[data-theme=dark]{
+  --bg:#0d0f14; --panel:#1e2532; --panel2:#2a323f; --calc:#181d27;
+  --line:#3a4356; --line2:#4e5871;
+  --txt:#e8eaf0; --dim:#8d95a8; --acc:#5107ed; --acc-txt:#b080fd; --ok:#3fb96b; --bad:#e05561; --warn:#e0b155;
+  --barra:rgba(13,15,20,.88); --sombra:0 1px 3px rgba(0,0,0,.4);
+  --bad-borde:rgba(224,85,97,.6); --acc-suave:rgba(81,7,237,0.18); --acc-tenue:rgba(81,7,237,0.12);
+  --acc-fuerte:#621af8; --btn-hover:#1e2532;
+}
+*{box-sizing:border-box}
+/* .icono sets display:inline-flex, which beats the UA stylesheet's [hidden] */
+[hidden]{display:none!important}
+/* A modal hides the page scrollbar, and without a reserved gutter the whole
+   document jumps sideways by its width every time one opens. */
+html{-webkit-text-size-adjust:100%;scrollbar-gutter:stable}
+body{margin:0 auto;padding:0 1.125rem 3rem;max-width:78rem;background:var(--bg);color:var(--txt);
+  font:1.0625rem/1.55 "Inter Tight",ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif}
+.ph{width:1.25rem;height:1.25rem;flex-shrink:0}
+
+/* ---------- sticky bar ---------- */
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:0.625rem;
+  margin:0 0 2rem;padding:1.125rem 1.5rem;background:var(--barra);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);flex-wrap:wrap}
+h1{font-size:1.25rem;letter-spacing:.08em;margin:0 0.375rem 0 0;color:var(--acc-txt);font-weight:800;
+  min-width:0;white-space:nowrap}
+.crece{flex:1}
+.icono{display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;
+  min-width:2.5rem;height:2.5rem;padding:0 0.625rem;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  color:var(--dim);cursor:pointer;font:inherit;font-size:0.9375rem;letter-spacing:.08em;font-weight:600}
+.icono:hover:not(:disabled){color:var(--acc-txt);border-color:var(--acc-txt)}
+.icono:disabled{opacity:.45;cursor:progress}
+/* The duotone "?" already carries its own disc: a bordered circle around it
+   drew a second one. The button is bare, the icon is the whole affordance. */
+.icono.redondo{border:0;background:none;border-radius:50%;padding:0;
+  width:1.75rem;height:1.75rem;min-width:0}
+.icono.redondo .ph{width:1.375rem;height:1.375rem}
+
+/* ---------- sections ---------- */
+section{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:1.5rem;margin-bottom:2rem;box-shadow:var(--sombra)}
+section>h2{display:flex;align-items:center;flex-wrap:wrap;gap:0.6875rem;font-size:0.9375rem;letter-spacing:.15em;
+  color:var(--txt);margin:0 0 1.125rem;font-weight:800;
+  padding-bottom:0.8125rem;border-bottom:1px solid var(--line)}
+/* Same inset as the inside of the cards: otherwise loose text sits
+   1.5rem to the left of everything else. */
+.sinjs{background:var(--panel);border:1px solid var(--acc-txt);border-radius:var(--radius);
+  padding:1.5rem;margin-bottom:2rem;box-shadow:var(--sombra)}
+.sinjs h2{margin:0 0 0.75rem;font-size:1.0625rem;color:var(--acc-txt);letter-spacing:.06em}
+.sinjs p{margin:0 0 0.625rem;color:var(--dim);max-width:70ch}
+.sinjs p:last-child{margin-bottom:0}
+.sub{margin:0 0 0.6875rem;padding:0 1.5rem;color:var(--dim);font-size:1rem;max-width:66ch}
+
+/* ---------- dialogs ---------- */
+/* overscroll-behavior:contain stops the scroll chaining to the page behind,
+   which on a phone left the document moving under an open dialog. */
+/* margin-top is fixed instead of auto: a centred dialog grows from the middle,
+   so expanding a section inside it slid the text the user was reading upwards. */
+dialog{position:relative;max-width:min(40rem,92vw);max-height:85vh;overflow:auto;
+  margin-top:7.5vh;margin-bottom:auto;
+  overscroll-behavior:contain;border:2px solid var(--acc-txt);
+  border-radius:0.5rem;background:var(--panel);color:var(--txt);padding:1.5rem;
+  box-shadow:0 20px 50px rgba(0,0,0,.3)}
+dialog:focus{outline:none}
+dialog::backdrop{background:rgba(0,0,0,.55);backdrop-filter:blur(2px)}
+dialog h3{display:flex;align-items:center;gap:0.625rem;margin:0 2.5rem 1.125rem 0;font-size:1.1875rem;
+  letter-spacing:.05em;color:var(--acc-txt);font-weight:800}
+dialog ol{margin:0;padding-left:1.375rem;color:var(--dim);font-size:1rem}
+dialog li{margin-bottom:0.5625rem} dialog li::marker{color:var(--acc-txt);font-weight:700}
+dialog dl{margin:0;font-size:0.9375rem}
+dialog dt{color:var(--acc-txt);font-weight:700;font-size:0.9375rem;letter-spacing:.06em;margin-top:0.875rem}
+dialog dt:first-child{margin-top:0}
+dialog dd{margin:0.1875rem 0 0;color:var(--dim)}
+.cerrar{margin-top:1.25rem;display:flex;gap:0.625rem;justify-content:flex-end;align-items:center;
+  flex-shrink:0}
+.cerrar button{white-space:nowrap;line-height:1.2;padding:0.5rem 1.125rem;font-size:1rem}
+/* INFO sits beside OK, not exiled to the far edge. */
+.cerrarX{position:absolute;top:1.125rem;right:1.125rem;border:0;background:none;padding:0.25rem;
+  color:var(--dim);cursor:pointer;display:grid;place-items:center;border-radius:0.375rem;line-height:0}
+.cerrarX:hover{color:var(--acc-txt);background:none}
+.cerrarX .ph{width:1.25rem;height:1.25rem}
+
+/* ---------- controls ---------- */
+/* Field labels: 25% larger and heavier than the rest. */
+label{display:block;font-size:1.09375rem;font-weight:600;letter-spacing:.06em;
+  color:var(--txt);margin-bottom:0.5rem}
+input,select,button{font:inherit;background:var(--panel2);color:var(--txt);
+  border:1px solid var(--line2);border-radius:0.4375rem;padding:0.5rem 0.625rem}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--acc-txt);outline-offset:1px}
+/* Table cells have no borders of their own and sit inside a scroller, so the
+   offset ring above is both hard to spot and clipped at the edges. Draw it inside. */
+td input:focus-visible,td select:focus-visible{outline-offset:-2px;background:var(--acc-suave)}
+button{cursor:pointer;transition:background-color .12s ease,border-color .12s ease,color .12s ease}
+/* Hover lifts the surface one step instead of repainting the button in the accent:
+   the accent then means "primary action" and nothing else. */
+/* Both themes darken on hover. Using --panel made the light theme go white,
+   which read as the button emptying out instead of responding. */
+button:hover:not(:disabled){background:var(--btn-hover);border-color:var(--line2);color:var(--txt)}
+button:active:not(:disabled){transform:translateY(1px)}
+button.primary{background:var(--acc);color:#fff;border-color:var(--acc);font-weight:700}
+button.primary:hover:not(:disabled){background:var(--acc-fuerte);border-color:var(--acc-fuerte);color:#fff}
+input[type=number]{appearance:textfield;-moz-appearance:textfield}
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.cfg{display:flex;flex-wrap:wrap;gap:1.75rem;align-items:flex-end}
+.cfg label{display:flex;align-items:center;gap:0.375rem}
+.grupo .tasas{display:flex;align-items:center;gap:0.875rem;flex-wrap:wrap}
+.tasa{display:inline-flex;align-items:center;gap:0.375rem}
+.tasa i{font-style:normal;font-size:0.9375rem;letter-spacing:.06em;color:var(--dim);font-weight:700}
+.tasa input{width:5.5rem}
+/* Same height, border and background as the number fields, so the three
+   controls in the row read as equals. */
+.switch{display:inline-flex;align-items:center;gap:0.5rem;margin:0;cursor:pointer;
+  background:var(--panel2);border:1px solid var(--line2);border-radius:0.4375rem;
+  padding:0.5rem 0.75rem;font-size:1.0625rem;letter-spacing:0;color:var(--txt);text-transform:none}
+.switch:hover{border-color:var(--acc-txt)}
+.switch:has(input:checked){border-color:var(--acc-txt);color:var(--acc-txt)}
+.switch input{width:1.25rem;height:1.25rem;accent-color:var(--acc);margin:0;cursor:pointer;
+  flex-shrink:0}
+dialog h4{margin:1.75rem 0 0.625rem;font-size:1.0625rem;color:var(--acc-txt);font-weight:700}
+dialog h4:first-of-type{margin-top:0}
+#ejemplosNum{display:block;white-space:pre;font-variant-numeric:tabular-nums;color:var(--txt);line-height:1.9}
+.cfg-2{margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--line)}
+.aviso-fee{color:var(--warn);font-size:0.875rem;max-width:34ch}
+/* The explanation lives inside the panel: opening a modal on top of a modal
+   stacked two layers just to read a paragraph. */
+/* An expanded disclosure is a panel, not loose text under a button. On the page
+   that panel is a card. Inside a dialog it is NOT: a bordered box inside a
+   bordered box reads as two frames for one thing, so there it becomes a region
+   separated by a hairline instead - same subtle grey, no second box. */
+.info,.desplegable{margin:1.25rem 0 0.25rem;padding:1rem 1rem 1.125rem;
+  border:1px solid var(--line);border-radius:0.375rem;background:var(--panel)}
+dialog .info,dialog .desplegable{padding:1.125rem 0 0.25rem;margin:1.125rem 0 0;
+  border:0;border-top:1px solid var(--line);border-radius:0;background:none}
+.info h4{margin:1.5rem 0 0.5rem;font-size:1.0625rem;color:var(--acc-txt);font-weight:700}
+.info h4:first-child{margin-top:0}
+.info p{margin:0 0 0.75rem;color:var(--dim);font-size:0.9375rem;max-width:72ch}
+.info dl{margin:0 0 0.75rem;font-size:0.9375rem}
+.info dt{color:var(--acc-txt);font-weight:700;font-size:0.875rem;letter-spacing:.05em;margin-top:0.75rem}
+.info dd{margin:0.1875rem 0 0;color:var(--dim)}
+/* Sub-block set off by a barely-there grey against the panel. */
+.subsec{background:var(--panel2);border-radius:0.5rem;padding:0.875rem 1rem;margin:0 0 1rem;
+  max-width:72ch}
+.subsec h5{margin:0 0 0.375rem;font-size:0.9375rem;font-weight:700;color:var(--txt);letter-spacing:.02em}
+.subsec p{margin:0}
+
+.con-muestra{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap}
+.muestra{font-variant-numeric:tabular-nums;color:var(--dim);font-size:0.9375rem}
+/* With fees off the fields must not be typeable. */
+.tasas.off .tasa{opacity:.4}
+.tasa input:disabled{cursor:default}
+.cfg>div{min-width:8.125rem}
+.cfg input[type=number]{width:7.5rem}
+.hint{font-size:0.9375rem;color:var(--dim);margin:1rem 0 0;max-width:86ch}
+.hint code{background:var(--panel2);padding:0.0625rem 0.3125rem;border-radius:0.25rem;font-size:0.9375rem}
+
+/* ---------- table ---------- */
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:0.375rem;
+  scrollbar-width:thin;overscroll-behavior-x:contain}
+/* Hint that the table continues: an edge gradient shown only when there is more
+   to scroll that way. It fades out on its own once the end is reached. */
+.scroll-caja{position:relative}
+.scroll-caja::before,.scroll-caja::after{content:"";position:absolute;top:1px;bottom:1px;
+  width:2.25rem;pointer-events:none;opacity:0;transition:opacity .18s ease}
+.scroll-caja::before{left:1px;background:linear-gradient(90deg,var(--panel),transparent)}
+.scroll-caja::after{right:1px;background:linear-gradient(270deg,var(--panel),transparent)}
+.scroll-caja.hay-izq::before,.scroll-caja.hay-der::after{opacity:1}
+/* width:max-content lets the table take the room it needs and .scroll do the scrolling;
+   with width:100% the 14 columns were squeezed and every cell clipped its content */
+table{border-collapse:collapse;width:max-content;min-width:100%;
+  font-size:0.796875rem;font-variant-numeric:tabular-nums}   /* 25% smaller than the rest */
+th,td{border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:0.125rem 0.25rem;text-align:right;white-space:nowrap}
+th:last-child,td:last-child{border-right:0}
+tr:last-child td{border-bottom:0}
+th{background:var(--panel2);font-size:0.6875rem;letter-spacing:.05em;color:var(--dim);
+  padding:0.625rem 0.4375rem;font-weight:600}
+th.res{color:var(--acc-txt)}
+td input,td select{border:0;background:transparent;padding:0.4375rem 0.3125rem;width:100%;
+  text-align:right;border-radius:0}
+td input:focus,td select:focus{background:var(--panel2)}
+td input.malo,td select.malo{background:rgba(192,43,58,.14);color:var(--bad)}
+/* A required field missing on a row already started: a faint border only,
+   in the same colour as a wrong value but without tinting background or text. */
+td input.falta,td select.falta{box-shadow:inset 0 0 0 1px var(--bad-borde);border-radius:0.1875rem}
+/* RRR and RETURN are not editable: no text cursor, which would suggest they are. */
+td.calc{color:var(--dim);padding:0.4375rem 0.5625rem;background:var(--calc);cursor:default}
+/* A price and its order type are one datum: drop the border that split them. */
+td.pegado{border-right:0}
+th.pegado{border-right:0}
+td.out{font-weight:700}
+.pos{color:var(--ok)} .neg{color:var(--bad)}
+/* Empty state: always a dash, dimmer than the EXIT highlight so the two
+   do not compete. The reason goes in the tooltip. */
+td.calc.na{color:var(--dim);opacity:.5;font-weight:500;font-size:0.6875rem;letter-spacing:.07em}
+/* EXIT closes the trade and is the most-forgotten field: minimal accent highlight. */
+th.h-sal{color:var(--acc-txt)}
+td.w-sal{background:var(--acc-tenue)}
+td.w-sal input{color:var(--acc-txt)}
+td.w-sal input:placeholder-shown{color:var(--txt)}
+.w-dia{width:6.25rem}.w-cri{width:4.25rem}.w-par{width:4.5rem}.w-pos{width:5rem}.w-x{width:3.25rem}
+.w-pri{width:6.25rem}.w-ord{width:3.5rem}
+.w-rrr{width:4.25rem}.w-ret{width:5.25rem}
+td.w-dia input{text-align:center;letter-spacing:.02em}
+.w-del{width:2.75rem}
+.del{color:var(--dim);border:0;background:none;padding:0.25rem;cursor:pointer;
+  display:grid;place-items:center;border-radius:0.3125rem;line-height:0;opacity:.55}
+.del .ph{width:1.125rem;height:1.125rem}
+tr:hover .del{opacity:1}
+.del:hover{color:var(--bad);background:var(--bad-borde)}
+.acciones-tabla{display:flex;gap:0.625rem;flex-wrap:wrap;margin-top:1rem}
+/* Scaled to the table, not to the body text. */
+.acciones-tabla button{font-size:0.875rem;padding:0.4375rem 0.75rem}
+/* The icon sits inside the control itself and ignores clicks: placed beside it,
+   people tap it expecting the dropdown and nothing happens. */
+.mes{margin-left:auto;position:relative;display:inline-flex;align-items:center}
+.mes .ph{position:absolute;left:0.625rem;width:1.0625rem;height:1.0625rem;
+  color:var(--dim);pointer-events:none}
+.mes select{font-size:0.9375rem;padding:0.375rem 0.5625rem 0.375rem 2.125rem}
+.mes:hover .ph{color:var(--acc-txt)}
+.stat .mesval{margin-top:0.3125rem;font-size:0.875rem;font-weight:600;color:var(--dim);
+  font-variant-numeric:tabular-nums;letter-spacing:.02em}
+
+/* ---------- results ---------- */
+.stats{display:flex;flex-wrap:wrap;gap:0.875rem;align-items:stretch}
+.stat{flex:1 1 14rem}
+.stat.destacado{flex:1.3 1 16rem}
+.barra{color:var(--dim);font-weight:400;margin:0 0.125rem}
+.stat{background:var(--panel2);border:1px solid var(--line);border-radius:0.375rem;padding:0.875rem 1rem}
+.stat.destacado{border-color:var(--acc-txt);background:var(--acc-suave)}
+.stat.destacado .k{color:var(--acc-txt)}
+.stat .k{font-size:0.875rem;letter-spacing:.07em;color:var(--dim);margin-bottom:0.4375rem;font-weight:700}
+.stat .v{font-size:1.5rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.2}
+/* Every card carries a title tooltip; without this nothing says so. */
+.stat{cursor:help;transition:border-color .15s ease}
+.stat:hover{border-color:var(--acc-txt)}
+
+/* ---------- empty table ---------- */
+.vacia td{padding:1.25rem 1rem;text-align:center;color:var(--dim);border-bottom:0}
+.vacia strong{display:block;color:var(--txt);font-weight:700;margin-bottom:0.25rem}
+.vacia span{font-size:0.9375rem}
+/* Under the cards, with room: it reads the F card, so it must not look like part
+   of it. */
+.avisos{margin-top:1.75rem;display:flex;flex-direction:column;gap:0.625rem}
+/* The icon names the kind of message before the sentence has to be read. */
+.aviso{display:flex;align-items:flex-start;gap:0.5rem;color:var(--warn);font-size:0.9375rem}
+.aviso .ph{width:1.25rem;height:1.25rem;flex-shrink:0;margin-top:0.0625rem}
+/* On the palette, and the right way round: the accent marks the notable state,
+   and caution belongs on the message that says to size down, not on the one that
+   says the odds are good. */
+.aviso.agresiva{color:var(--acc-txt)}
+.aviso.neutral{color:var(--dim)}
+.aviso.conservadora{color:var(--warn)}
+
+/* ---------- footer ---------- */
+footer{border:1px solid var(--line);border-radius:var(--radius);padding:1.25rem 1.5rem;
+  background:var(--panel);box-shadow:var(--sombra)}
+footer h2{font-size:0.9375rem;letter-spacing:.15em;color:var(--dim);margin:0 0 0.5rem;font-weight:800}
+footer p{margin:0 0 0.375rem;color:var(--dim);font-size:0.9375rem}
+footer strong{color:var(--txt);font-weight:600}
+.cierre{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;
+  flex-wrap:wrap;margin-top:2.75rem;padding:0 1.5rem}
+@media(max-width:60rem){
+}
+.fina{margin:0;font-size:0.90625rem;line-height:1.35;color:var(--dim);opacity:.75;max-width:62ch}
+.contacto{display:flex;gap:0.375rem;margin-left:auto}
+.contacto a{display:grid;place-items:center;width:2.375rem;height:2.375rem;border-radius:0.5625rem;
+  color:var(--dim);text-decoration:none;border:1px solid transparent}
+.contacto a:hover{color:var(--acc-txt);border-color:var(--line)}
+dialog p.txt{margin:0 0 1.125rem;color:var(--dim);font-size:0.9375rem}
+dialog label{margin-top:0.875rem}
+dialog input[type=password]{width:100%;font-size:1.0625rem;letter-spacing:.06em}
+.check{display:flex;align-items:center;gap:0.625rem;margin-top:1.125rem;
+  font-size:1.0625rem;color:var(--txt);letter-spacing:0;cursor:pointer}
+.check input{width:1.1875rem;height:1.1875rem;accent-color:var(--acc);margin:0;cursor:pointer}
+.check span{color:var(--dim)}
+.err{display:flex;align-items:center;gap:0.5rem;margin:0.875rem 0 0;color:var(--bad);font-size:1rem}
+.err .ph{width:1.0625rem;height:1.0625rem}
+.fecha{display:flex;align-items:center;gap:0.125rem;padding-left:0.25rem}
+.fecha input{flex:1;min-width:0;text-align:left;padding-left:0.25rem}
+.fecha:focus-within{background:var(--panel2)}
+/* A click anywhere in the cell opens the calendar, so the hand cursor, not the
+   text one, which would promise free editing. */
+.fecha,.fecha input{cursor:pointer}
+.calbtn{border:0;background:none;padding:0.25rem 0.25rem;color:var(--dim);cursor:pointer;
+  display:grid;place-items:center;border-radius:0.3125rem}
+.calbtn:hover{color:var(--acc-txt)}
+.calbtn .ph{width:1.0625rem;height:1.0625rem}
+.oculto-picker{position:absolute;opacity:0;pointer-events:none;width:0;height:0}
+pre{white-space:pre-wrap;font:0.875rem/1.6 ui-monospace,Menlo,monospace}
+/* ---------- options sheet (mobile) ---------- */
+.solo-movil{display:none}
+.hoja h3{margin:0 1.75rem 1rem 0}
+.grupo-rot{margin:1.25rem 0 0.5rem;font-size:0.75rem;letter-spacing:.16em;
+  color:var(--dim);font-weight:800;text-transform:uppercase}
+.grupo-rot:first-of-type{margin-top:0}
+.fila{display:flex;align-items:center;gap:0.75rem;width:100%;min-height:3rem;
+  padding:0.625rem 0.75rem;background:none;border:0;border-radius:0.5rem;
+  color:var(--txt);font-size:1rem;text-align:left;letter-spacing:0}
+.fila:hover,.fila:focus-visible{background:var(--panel2);border-color:transparent}
+.fila .ph{color:var(--dim);flex-shrink:0}
+.fila:hover .ph{color:var(--acc-txt)}
+.fila b{font-weight:400;font-size:0.875rem;color:var(--dim)}
+#ranuraDlg,#ranuraSec{padding-top:0.75rem}
+/* chevron that turns when the row is expanded */
+.fila .chevron{margin-left:auto;transition:transform .15s ease}
+.fila[aria-expanded="true"] .chevron{transform:rotate(180deg)}
+.fila[aria-expanded="true"]{color:var(--acc-txt)}
+.fila[aria-expanded="true"] .ph{color:var(--acc-txt)}
+.desplegable ol{margin:0;padding-left:1.25rem;color:var(--dim);font-size:0.9375rem}
+.desplegable li{margin-bottom:0.5rem}
+.desplegable li::marker{color:var(--acc-txt);font-weight:700}
+
+
+/* ---------- chart ---------- */
+/* preserveAspectRatio="none" stretches the box, and vector-effect keeps the
+   strokes at their nominal width while it does. Nothing with a shape of its own
+   goes inside: no dots, no text. */
+/* No frame of its own: the section around it is already a panel, and a bordered
+   box inside a bordered box reads as two things. A short centred rule and plenty
+   of room do the job instead. */
+.grafico{position:relative;margin:3rem 0 0;padding:3rem 0 0}
+.grafico::before{content:"";position:absolute;top:0;left:20%;width:60%;
+  border-top:1px solid var(--line)}
+/* The chart is a section of its own, so it gets a heading like one. */
+.g-cab{display:flex;flex-wrap:wrap;align-items:baseline;gap:0.5rem 1rem;
+  margin:0 0 1.25rem;padding:0}
+.g-cab>div{flex:1 1 18rem}
+.g-cab h3{margin:0 0 0.3125rem;font-size:0.9375rem;letter-spacing:.06em;
+  color:var(--acc-txt);font-weight:800}
+.g-nota{margin:0;color:var(--dim);font-size:0.9375rem;max-width:60ch}
+.g-leyenda{display:flex;flex-wrap:wrap;align-items:center;gap:0.625rem 1.5rem;
+  margin:0 0 1.5rem;padding-bottom:0.875rem;border-bottom:1px solid var(--line);
+  font-size:0.875rem;color:var(--dim)}
+.g-ll{display:flex;align-items:center;gap:0.4375rem}
+.g-ll{display:flex;align-items:center;gap:0.4375rem}
+.g-ll i{width:1.125rem;height:2px;flex-shrink:0;background:currentColor;border-radius:1px}
+/* Dashed to match the line it stands for, without a border on a zero-height box. */
+.g-f i{background:repeating-linear-gradient(to right,
+  currentColor 0 0.3125rem, transparent 0.3125rem 0.5rem)}
+/* No line of its own on the chart, so no colour in the swatch - but the swatch is
+   still there, or the third item would not start where the other two do. */
+.g-wl i{background:none}
+.g-wl{color:var(--dim)}
+.g-res{color:var(--acc-txt)}
+/* Which point the figures belong to; the last one until a point is pointed at. */
+.g-cuando{color:var(--dim);white-space:nowrap;font-variant-numeric:tabular-nums}
+.g-f i{border-top-style:dashed}
+.g-ll b{color:var(--txt);font-weight:700;font-variant-numeric:tabular-nums}
+.g-caja{display:grid;grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:stretch;column-gap:0.625rem}
+/* overflow:visible, or the gridlines at the very top and bottom - and the curve
+   when it reaches them - lose the half of their stroke that falls outside. */
+#g-svg{width:100%;height:11.25rem;min-width:0;overflow:visible}
+/* Steps are positioned by percentage rather than spread apart, so each label sits
+   on its own gridline. It lines up because the drawing has no vertical padding. */
+.g-eje{position:relative;flex-shrink:0;min-width:3.25rem;
+  font-size:0.75rem;color:var(--dim);white-space:nowrap}
+.g-eje span{position:absolute;transform:translateY(-50%);line-height:1}
+.g-der span{right:0}
+.g-grid{stroke:var(--line);stroke-width:1}
+.g-mes{stroke:var(--line);stroke-width:1;stroke-dasharray:2 5}
+.g-cero{stroke:var(--line2);stroke-width:1;stroke-dasharray:3 3}
+.g-linea{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.g-la{stroke:var(--acc-txt)}
+.g-lf{stroke:var(--dim);stroke-dasharray:5 4}
+/* Invisible bands: they carry the tooltip and drive the readout above the chart. */
+/* ---------- selecting a period ---------- */
+/* The band sits behind the lines: it marks the stretch, it does not cover it. */
+.g-banda{fill:var(--acc-suave);stroke:var(--acc-txt);stroke-width:1}
+/* Still being chosen: dashed, and lighter, so it does not look decided yet. */
+.g-banda.abierta{stroke-dasharray:4 3;fill:var(--acc-tenue)}
+.grafico.abriendo .g-cuando{color:var(--acc-txt)}
+.g-pista{margin:0.875rem 0 0;color:var(--dim);font-size:0.875rem}
+/* A bordered block, not a whisper of grey text: it is what says whether the
+   figures beside it are the whole history or a chosen slice of it. */
+.g-per{display:inline-flex;align-items:center;gap:0.5rem;margin-left:auto;
+  padding:0.3125rem 0.625rem;border:1px solid var(--line);border-radius:0.375rem;
+  font-size:0.875rem}
+.grafico.con-sel .g-per,.grafico.abriendo .g-per{
+  border-color:var(--acc-txt);background:var(--acc-suave)}
+.g-limpiar{display:none;border:0;background:none;padding:0.125rem;cursor:pointer;
+  color:var(--dim);line-height:0;border-radius:0.25rem}
+.grafico.con-sel .g-limpiar,.grafico.abriendo .g-limpiar{display:inline-flex}
+.g-limpiar:hover{color:var(--acc-txt)}
+.g-limpiar .ph{width:1rem;height:1rem}
+.grafico.con-sel .g-cuando,.grafico.abriendo .g-cuando{
+  color:var(--acc-txt);font-weight:700}
+
+.g-hit{fill:transparent;cursor:crosshair}
+.g-hit:hover,.g-hit:focus-visible{fill:var(--acc-suave)}
+.g-hit:focus{outline:none}
+/* Column 2 only: spanning the axis gutters too is what made the two dates look
+   like they belonged to the numbers beside them. */
+/* Column 2 only: spanning the axis gutters too is what made the dates look like
+   they belonged to the numbers beside them. Each sits on its own gridline. */
+.g-x{grid-column:2;position:relative;height:1rem;margin-top:0.5rem;
+  font-size:0.75rem;color:var(--dim);font-variant-numeric:tabular-nums}
+.g-x span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+/* Two axes in different units, so each is named above the numbers it belongs to -
+   not underneath, where the timeline lives and they would read as dates. */
+.g-rot{display:flex;justify-content:space-between;align-items:flex-end;
+  margin:0 0 1.375rem;
+  font-size:0.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+/* The caption breaks where the string says to, rather than wherever it fits. */
+.g-rot span{white-space:pre-line;line-height:1.25}
+.g-rot span:last-child{text-align:right}
+.g-rotX{margin:0.375rem 0 0;text-align:center;
+  font-size:0.6875rem;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+/* The figure states its own outcome for a screen reader; sighted readers have
+   the same numbers in the legend. */
+.g-alt{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);
+  white-space:nowrap;margin:0}
+@media(max-width:640px){
+  #g-svg{height:8.75rem}
+  /* The period drops to a line of its own rather than being squeezed beside
+     three figures that no longer fit on one row. */
+  .g-per{margin-left:0;flex-basis:100%}
+}
+
+/* ---------- import dialog ---------- */
+/* A plain textarea, not a styled drop zone: the clipboard already hands over
+   tab-separated rows, so there is nothing a custom widget would add. */
+.zona-pegar{display:block;width:100%;box-sizing:border-box;margin:0.75rem 0 0.5rem;
+  padding:0.75rem;border:1px dashed var(--acc-txt);border-radius:0.375rem;
+  background:var(--acc-tenue);color:var(--txt);font-family:inherit;font-size:0.9375rem;
+  line-height:1.5;resize:vertical;white-space:pre;overflow-wrap:normal}
+.zona-pegar::placeholder{color:var(--dim)}
+.imp-conteo{margin:1.125rem 0 0.5rem;color:var(--dim);font-size:0.9375rem}
+/* Capped so a long paste does not push the choices and the buttons off screen. */
+.imp-scroll{max-height:15rem;overflow:auto}
+#impTabla{border-collapse:collapse;width:max-content;min-width:100%;font-size:0.875rem}
+#impTabla th{padding:0.375rem;text-align:left;border-bottom:1px solid var(--line)}
+#impTabla th select{width:100%;min-width:7rem;font-size:0.8125rem;padding:0.25rem}
+#impTabla td{padding:0.375rem;border-bottom:1px solid var(--line);vertical-align:top;
+  white-space:nowrap}
+.imp-cruda{display:block;color:var(--dim)}
+/* The whole design rests on this line: it shows what the cell becomes, so a wrong
+   reading of a date or a decimal is visible before it is committed. */
+.imp-leido{display:block;color:var(--acc-txt);font-weight:700}
+.imp-opts{display:flex;flex-wrap:wrap;gap:1.5rem;margin-top:1.125rem}
+.imp-opts fieldset{border:1px solid var(--line);border-radius:0.375rem;
+  padding:0.25rem 0.875rem 0.875rem;margin:0}
+.imp-opts legend{padding:0 0.375rem;color:var(--dim);font-size:0.8125rem;
+  font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+.imp-opts .check{margin-top:0.5rem}
+
+@media(max-width:640px){
+  body{padding:0 0.75rem 3.5rem}
+  /* The bar keeps the title and a single control: the rest lives in the sheet. */
+  .solo-movil{display:inline-flex}
+  .topbar #btnAyuda,.topbar #btnCom,.topbar #btnTema,
+  .topbar #save,.topbar #load,.topbar #link{display:none}
+  /* Full screen for what gets read or edited. Decision dialogs (password, notice,
+     confirm) stay small and centred: covering the whole screen to ask one question
+     hides the very context the decision depends on. */
+  .hoja,#dlgCampos,#dlgAyuda,#dlgCfg{
+    margin:0;width:100%;max-width:100%;height:100%;max-height:100%;
+    border:0;border-radius:0;
+    /* No bottom padding: the pinned footer owns the bottom edge, including the
+       safe area. With padding here the footer floated above a strip of content. */
+    padding:1.25rem 1rem 0}
+  /* Lined up with the ⋯ in the bar, so the close lands where the opener was. */
+  .hoja .cerrarX,#dlgCampos .cerrarX,#dlgAyuda .cerrarX,#dlgCfg .cerrarX{
+    top:1.1875rem;right:0.8125rem}
+  /* Actions pinned to the bottom edge, which is where a phone expects them
+     and where the thumb already is. */
+  .hoja .cerrar,#dlgCampos .cerrar,#dlgAyuda .cerrar,#dlgCfg .cerrar{
+    position:sticky;bottom:0;z-index:2;background:var(--panel);
+    /* Negative side margins cancel the dialog padding so the bar is full-bleed
+       and nothing scrolls past it at the edges. */
+    margin:1.5rem -1rem 0;
+    padding:0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom))}
+  .hoja .cerrar button,#dlgCampos .cerrar button,
+  #dlgAyuda .cerrar button,#dlgCfg .cerrar button{flex:1;padding:0.8125rem}
+  /* The month filter must not push the section heading out of the viewport. */
+  .mes{margin-left:0;width:100%}
+  .w-mes{width:100%}
+}
+@media(max-width:640px){
+  h1{font-size:1.0625rem}
+  .h1-largo{display:none}   /* sólo "F TRADER" en pantallas chicas */
+  .topbar{gap:0.4375rem;padding:0.875rem 0.875rem}
+  .icono span{display:none}
+  /* Icons stay right-aligned; the fine print wraps above them. */
+  .cierre{justify-content:flex-end}
+  .fina{flex:1 1 100%}
+}

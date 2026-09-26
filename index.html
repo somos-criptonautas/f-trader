@@ -1,0 +1,425 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later
+     Copyright (C) 2026 Criptonautas -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>F TRADER — CON CUÁNTO TRADEAR</title>
+
+<meta name="description" content="Planilla para registrar trades y saber con cuánto tradear. Sin cuentas ni servidor: los datos quedan en el navegador.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Criptonautas">
+<meta property="og:locale" content="es_AR">
+<meta property="og:title" content="F Trader — Con cuánto tradear">
+<meta property="og:description" content="Registra operaciones y calcula con cuánto tradear. Sin cuentas ni servidor: los datos quedan en el navegador.">
+<meta property="og:url" content="https://calc.criptonautas.co/">
+<meta property="og:image" content="https://calc.criptonautas.co/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="F Trader — promedio, aciertos y cuánto capital usar.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d0f14" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="app.css">
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+<symbol viewBox="0 0 256 256" fill="currentColor" id="ph-dt-question"><path d="M224,128a96,96,0,1,1-96-96A96,96,0,0,1,224,128Z" opacity="0.2"/><path d="M140,180a12,12,0,1,1-12-12A12,12,0,0,1,140,180ZM128,72c-22.06,0-40,16.15-40,36v4a8,8,0,0,0,16,0v-4c0-11,10.77-20,24-20s24,9,24,20-10.77,20-24,20a8,8,0,0,0-8,8v8a8,8,0,0,0,16,0v-.72c18.24-3.35,32-17.9,32-35.28C168,88.15,150.06,72,128,72Zm104,56A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/></symbol>
+<symbol viewBox="0 0 256 256" fill="currentColor" id="ph-dt-gear"><path d="M207.86,123.18l16.78-21a99.14,99.14,0,0,0-10.07-24.29l-26.7-3a81,81,0,0,0-6.81-6.81l-3-26.71a99.43,99.43,0,0,0-24.3-10l-21,16.77a81.59,81.59,0,0,0-9.64,0l-21-16.78A99.14,99.14,0,0,0,77.91,41.43l-3,26.7a81,81,0,0,0-6.81,6.81l-26.71,3a99.43,99.43,0,0,0-10,24.3l16.77,21a81.59,81.59,0,0,0,0,9.64l-16.78,21a99.14,99.14,0,0,0,10.07,24.29l26.7,3a81,81,0,0,0,6.81,6.81l3,26.71a99.43,99.43,0,0,0,24.3,10l21-16.77a81.59,81.59,0,0,0,9.64,0l21,16.78a99.14,99.14,0,0,0,24.29-10.07l3-26.7a81,81,0,0,0,6.81-6.81l26.71-3a99.43,99.43,0,0,0,10-24.3l-16.77-21A81.59,81.59,0,0,0,207.86,123.18ZM128,168a40,40,0,1,1,40-40A40,40,0,0,1,128,168Z" opacity="0.2"/><path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Zm88-29.84q.06-2.16,0-4.32l14.92-18.64a8,8,0,0,0,1.48-7.06,107.6,107.6,0,0,0-10.88-26.25,8,8,0,0,0-6-3.93l-23.72-2.64q-1.48-1.56-3-3L186,40.54a8,8,0,0,0-3.94-6,107.29,107.29,0,0,0-26.25-10.86,8,8,0,0,0-7.06,1.48L130.16,40Q128,40,125.84,40L107.2,25.11a8,8,0,0,0-7.06-1.48A107.6,107.6,0,0,0,73.89,34.51a8,8,0,0,0-3.93,6L67.32,64.27q-1.56,1.49-3,3L40.54,70a8,8,0,0,0-6,3.94,107.71,107.71,0,0,0-10.87,26.25,8,8,0,0,0,1.49,7.06L40,125.84Q40,128,40,130.16L25.11,148.8a8,8,0,0,0-1.48,7.06,107.6,107.6,0,0,0,10.88,26.25,8,8,0,0,0,6,3.93l23.72,2.64q1.49,1.56,3,3L70,215.46a8,8,0,0,0,3.94,6,107.71,107.71,0,0,0,26.25,10.87,8,8,0,0,0,7.06-1.49L125.84,216q2.16.06,4.32,0l18.64,14.92a8,8,0,0,0,7.06,1.48,107.21,107.21,0,0,0,26.25-10.88,8,8,0,0,0,3.93-6l2.64-23.72q1.56-1.48,3-3L215.46,186a8,8,0,0,0,6-3.94,107.71,107.71,0,0,0,10.87-26.25,8,8,0,0,0-1.49-7.06Zm-16.1-6.5a73.93,73.93,0,0,1,0,8.68,8,8,0,0,0,1.74,5.48l14.19,17.73a91.57,91.57,0,0,1-6.23,15L187,173.11a8,8,0,0,0-5.1,2.64,74.11,74.11,0,0,1-6.14,6.14,8,8,0,0,0-2.64,5.1l-2.51,22.58a91.32,91.32,0,0,1-15,6.23l-17.74-14.19a8,8,0,0,0-5-1.75h-.48a73.93,73.93,0,0,1-8.68,0,8.06,8.06,0,0,0-5.48,1.74L100.45,215.8a91.57,91.57,0,0,1-15-6.23L82.89,187a8,8,0,0,0-2.64-5.1,74.11,74.11,0,0,1-6.14-6.14,8,8,0,0,0-5.1-2.64L46.43,170.6a91.32,91.32,0,0,1-6.23-15l14.19-17.74a8,8,0,0,0,1.74-5.48,73.93,73.93,0,0,1,0-8.68,8,8,0,0,0-1.74-5.48L40.2,100.45a91.57,91.57,0,0,1,6.23-15L69,82.89a8,8,0,0,0,5.1-2.64,74.11,74.11,0,0,1,6.14-6.14A8,8,0,0,0,82.89,69L85.4,46.43a91.32,91.32,0,0,1,15-6.23l17.74,14.19a8,8,0,0,0,5.48,1.74,73.93,73.93,0,0,1,8.68,0,8.06,8.06,0,0,0,5.48-1.74L155.55,40.2a91.57,91.57,0,0,1,15,6.23L173.11,69a8,8,0,0,0,2.64,5.1,74.11,74.11,0,0,1,6.14,6.14,8,8,0,0,0,5.1,2.64l22.58,2.51a91.32,91.32,0,0,1,6.23,15l-14.19,17.74A8,8,0,0,0,199.87,123.66Z"/></symbol>
+<symbol viewBox="0 0 256 256" fill="currentColor" id="ph-dt-sun"><path d="M184,128a56,56,0,1,1-56-56A56,56,0,0,1,184,128Z" opacity="0.2"/><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/></symbol>
+<symbol viewBox="0 0 256 256" fill="currentColor" id="ph-dt-moon"><path d="M227.89,147.89A96,96,0,1,1,108.11,28.11,96.09,96.09,0,0,0,227.89,147.89Z" opacity="0.2"/><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"/></symbol>
+<symbol viewBox="0 0 256 256" fill="currentColor" id="ph-dt-arrow-circle-up"><path d="M224,128a96,96,0,1,1-96-96A96,96,0,0,1,224,128Z" opacity="0.2"/><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z"/><path d="M128,72a8,8,0,0,1,5.66,2.34l40,40a8,8,0,0,1-11.32,11.32L136,99.31V176a8,8,0,0,1-16,0V99.31L93.66,125.66a8,8,0,0,1-11.32-11.32l40-40A8,8,0,0,1,128,72Z"/></symbol>
+<symbol viewBox="0 0 256 256" fill="currentColor" id="ph-dt-minus-circle"><path d="M224,128a96,96,0,1,1-96-96A96,96,0,0,1,224,128Z" opacity="0.2"/><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z"/><path d="M84,128a8,8,0,0,1,8-8h72a8,8,0,0,1,0,16H92A8,8,0,0,1,84,128Z"/></symbol>
+<symbol viewBox="0 0 256 256" fill="currentColor" id="ph-dt-arrow-circle-down"><path d="M224,128a96,96,0,1,1-96-96A96,96,0,0,1,224,128Z" opacity="0.2"/><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z"/><path d="M128,184a8,8,0,0,1-5.66-2.34l-40-40a8,8,0,0,1,11.32-11.32L120,156.69V80a8,8,0,0,1,16,0v76.69l26.34-26.35a8,8,0,0,1,11.32,11.32l-40,40A8,8,0,0,1,128,184Z"/></symbol>
+<symbol viewBox="0 0 256 256" fill="currentColor" id="ph-dt-clipboard-text"><path d="M208,48V216a8,8,0,0,1-8,8H56a8,8,0,0,1-8-8V48a8,8,0,0,1,8-8H200A8,8,0,0,1,208,48Z" opacity="0.2"/><path d="M200,32H168V24a8,8,0,0,0-8-8H96a8,8,0,0,0-8,8v8H56A16,16,0,0,0,40,48V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V48A16,16,0,0,0,200,32ZM104,32h48V48H104ZM200,216H56V48H88v8a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V48h32Z"/><path d="M88,112a8,8,0,0,1,8-8h64a8,8,0,0,1,0,16H96A8,8,0,0,1,88,112Zm8,48h64a8,8,0,0,0,0-16H96a8,8,0,0,0,0,16Z"/></symbol>
+<symbol viewBox="0 0 256 256" fill="currentColor" id="ph-dt-circle-half-tilt"><path d="M201.54,54.46a104,104,0,0,1-147.08,147Z" opacity="0.2"/><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm62.23-150.23a88,88,0,0,1-124.46,124.46Z"/></symbol>
+<symbol viewBox="0 0 256 256" fill="currentColor" id="ph-dt-download"><path d="M232,136v64a8,8,0,0,1-8,8H32a8,8,0,0,1-8-8V136a8,8,0,0,1,8-8H224A8,8,0,0,1,232,136Z" opacity="0.2"/><path d="M240,136v64a16,16,0,0,1-16,16H32a16,16,0,0,1-16-16V136a16,16,0,0,1,16-16H72a8,8,0,0,1,0,16H32v64H224V136H184a8,8,0,0,1,0-16h40A16,16,0,0,1,240,136Zm-117.66-2.34a8,8,0,0,0,11.32,0l48-48a8,8,0,0,0-11.32-11.32L136,108.69V24a8,8,0,0,0-16,0v84.69L85.66,74.34A8,8,0,0,0,74.34,85.66ZM200,168a12,12,0,1,0-12,12A12,12,0,0,0,200,168Z"/></symbol>
+<symbol viewBox="0 0 256 256" fill="currentColor" id="ph-dt-upload"><path d="M232,136v64a8,8,0,0,1-8,8H32a8,8,0,0,1-8-8V136a8,8,0,0,1,8-8H224A8,8,0,0,1,232,136Z" opacity="0.2"/><path d="M240,136v64a16,16,0,0,1-16,16H32a16,16,0,0,1-16-16V136a16,16,0,0,1,16-16H80a8,8,0,0,1,0,16H32v64H224V136H176a8,8,0,0,1,0-16h48A16,16,0,0,1,240,136ZM85.66,77.66,120,43.31V128a8,8,0,0,0,16,0V43.31l34.34,34.35a8,8,0,0,0,11.32-11.32l-48-48a8,8,0,0,0-11.32,0l-48,48A8,8,0,0,0,85.66,77.66ZM200,168a12,12,0,1,0-12,12A12,12,0,0,0,200,168Z"/></symbol>
+<symbol viewBox="0 0 256 256" fill="currentColor" id="ph-dt-link-simple"><path d="M209.94,113.94l-96,96a48,48,0,0,1-67.88-67.88l96-96a48,48,0,0,1,67.88,67.88Z" opacity="0.2"/><path d="M165.66,90.34a8,8,0,0,1,0,11.32l-64,64a8,8,0,0,1-11.32-11.32l64-64A8,8,0,0,1,165.66,90.34ZM215.6,40.4a56,56,0,0,0-79.2,0L106.34,70.45a8,8,0,0,0,11.32,11.32l30.06-30a40,40,0,0,1,56.57,56.56l-30.07,30.06a8,8,0,0,0,11.31,11.32L215.6,119.6a56,56,0,0,0,0-79.2ZM138.34,174.22l-30.06,30.06a40,40,0,1,1-56.56-56.57l30.05-30.05a8,8,0,0,0-11.32-11.32L40.4,136.4a56,56,0,0,0,79.2,79.2l30.06-30.07a8,8,0,0,0-11.32-11.31Z"/></symbol>
+<symbol viewBox="0 0 256 256" fill="currentColor" id="ph-dt-github-logo"><path d="M208,104v8a48,48,0,0,1-48,48H136a32,32,0,0,1,32,32v40H104V192a32,32,0,0,1,32-32H112a48,48,0,0,1-48-48v-8a49.28,49.28,0,0,1,8.51-27.3A51.92,51.92,0,0,1,76,32a52,52,0,0,1,43.83,24h32.34A52,52,0,0,1,196,32a51.92,51.92,0,0,1,3.49,44.7A49.28,49.28,0,0,1,208,104Z" opacity="0.2"/><path d="M208.3,75.68A59.74,59.74,0,0,0,202.93,28,8,8,0,0,0,196,24a59.75,59.75,0,0,0-48,24H124A59.75,59.75,0,0,0,76,24a8,8,0,0,0-6.93,4,59.78,59.78,0,0,0-5.38,47.68A58.14,58.14,0,0,0,56,104v8a56.06,56.06,0,0,0,48.44,55.47A39.8,39.8,0,0,0,96,192v8H72a24,24,0,0,1-24-24A40,40,0,0,0,8,136a8,8,0,0,0,0,16,24,24,0,0,1,24,24,40,40,0,0,0,40,40H96v16a8,8,0,0,0,16,0V192a24,24,0,0,1,48,0v40a8,8,0,0,0,16,0V192a39.8,39.8,0,0,0-8.44-24.53A56.06,56.06,0,0,0,216,112v-8A58,58,0,0,0,208.3,75.68ZM200,112a40,40,0,0,1-40,40H112a40,40,0,0,1-40-40v-8a41.74,41.74,0,0,1,6.9-22.48A8,8,0,0,0,80,73.83a43.81,43.81,0,0,1,.79-33.58,43.88,43.88,0,0,1,32.32,20.06A8,8,0,0,0,119.82,64h32.35a8,8,0,0,0,6.74-3.69,43.87,43.87,0,0,1,32.32-20.06A43.81,43.81,0,0,1,192,73.83a8.09,8.09,0,0,0,1,7.65A41.76,41.76,0,0,1,200,104Z"/></symbol>
+<symbol viewBox="0 0 256 256" fill="currentColor" id="ph-dt-chats-circle"><path d="M231.76,216.34a6,6,0,0,1-7.42,7.42l-29.87-8.53A72.05,72.05,0,0,1,92.06,175.89h0c1.3.07,2.61.11,3.93.11a72,72,0,0,0,67.93-95.88h0a72,72,0,0,1,59.29,106.36Z" opacity="0.2"/><path d="M231.79,187.33A80,80,0,0,0,169.57,72.59,80,80,0,1,0,24.21,139.33l-7.66,26.82a14,14,0,0,0,17.3,17.3l26.82-7.66a80.15,80.15,0,0,0,25.75,7.63,80,80,0,0,0,108.91,40.37l26.82,7.66a14,14,0,0,0,17.3-17.3ZM61.53,159.23a8.22,8.22,0,0,0-2.2.3l-26.41,7.55,7.55-26.41a8,8,0,0,0-.68-6,63.95,63.95,0,1,1,25.57,25.57A7.94,7.94,0,0,0,61.53,159.23Zm154,29.44,7.55,26.41-26.41-7.55a8,8,0,0,0-6,.68,64.06,64.06,0,0,1-86.32-24.64A79.93,79.93,0,0,0,174.7,89.71a64,64,0,0,1,41.51,92.93A8,8,0,0,0,215.53,188.67Z"/></symbol>
+<symbol viewBox="0 0 256 256" fill="currentColor" id="ph-dt-shield-star"><path d="M216,56v56c0,96-88,120-88,120S40,208,40,112V56a8,8,0,0,1,8-8H208A8,8,0,0,1,216,56Z" opacity="0.2"/><path d="M80.57,117A8,8,0,0,1,91,112.57l29,11.61V96a8,8,0,0,1,16,0v28.18l29-11.61A8,8,0,1,1,171,127.43l-30.31,12.12L158.4,163.2a8,8,0,1,1-12.8,9.6L128,149.33,110.4,172.8a8,8,0,1,1-12.8-9.6l17.74-23.65L85,127.43A8,8,0,0,1,80.57,117ZM224,56v56c0,52.72-25.52,84.67-46.93,102.19-23.06,18.86-46,25.27-47,25.53a8,8,0,0,1-4.2,0c-1-.26-23.91-6.67-47-25.53C57.52,196.67,32,164.72,32,112V56A16,16,0,0,1,48,40H208A16,16,0,0,1,224,56Zm-16,0L48,56l0,56c0,37.3,13.82,67.51,41.07,89.81A128.25,128.25,0,0,0,128,223.62a129.3,129.3,0,0,0,39.41-22.2C194.34,179.16,208,149.07,208,112Z"/></symbol>
+<symbol viewBox="0 0 256 256" fill="currentColor" id="ph-dt-envelope"><path d="M224,56l-96,88L32,56Z" opacity="0.2"/><path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48Zm-96,85.15L52.57,64H203.43ZM98.71,128,40,181.81V74.19Zm11.84,10.85,12,11.05a8,8,0,0,0,10.82,0l12-11.05,58,53.15H52.57ZM157.29,128,216,74.18V181.82Z"/></symbol>
+<symbol viewBox="0 0 256 256" fill="currentColor" id="ph-dt-calendar-blank"><path d="M216,48V88H40V48a8,8,0,0,1,8-8H208A8,8,0,0,1,216,48Z" opacity="0.2"/><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Z"/></symbol>
+<symbol viewBox="0 0 256 256" fill="currentColor" id="ph-dt-warning-circle"><path d="M224,128a96,96,0,1,1-96-96A96,96,0,0,1,224,128Z" opacity="0.2"/><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z"/></symbol>
+<symbol viewBox="0 0 256 256" fill="currentColor" id="ph-dt-funnel"><path d="M221.9,61.38l-67.74,72.31a8,8,0,0,0-2.16,5.47v55.49a8,8,0,0,1-3.56,6.66l-32,21.33A8,8,0,0,1,104,216V139.16a8,8,0,0,0-2.16-5.47L34.1,61.38A8,8,0,0,1,40,48H216A8,8,0,0,1,221.9,61.38Z" opacity="0.2"/><path d="M230.6,49.53A15.81,15.81,0,0,0,216,40H40A16,16,0,0,0,28.19,66.76l.08.09L96,139.17V216a16,16,0,0,0,24.87,13.32l32-21.34A16,16,0,0,0,160,194.66V139.17l67.74-72.32.08-.09A15.8,15.8,0,0,0,230.6,49.53ZM40,56h0Zm108.34,72.28A15.92,15.92,0,0,0,144,139.17v55.49L112,216V139.17a15.92,15.92,0,0,0-4.32-10.94L40,56H216Z"/></symbol>
+<symbol viewBox="0 0 256 256" fill="currentColor" id="ph-dt-trash"><path d="M200,56V208a8,8,0,0,1-8,8H64a8,8,0,0,1-8-8V56Z" opacity="0.2"/><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"/></symbol>
+<symbol viewBox="0 0 256 256" fill="currentColor" id="ph-dt-dots-three-circle"><path d="M224,128a96,96,0,1,1-96-96A96,96,0,0,1,224,128Z" opacity="0.2"/><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm56-88a12,12,0,1,1-12-12A12,12,0,0,1,184,128Zm-44,0a12,12,0,1,1-12-12A12,12,0,0,1,140,128Zm-44,0a12,12,0,1,1-12-12A12,12,0,0,1,96,128Z"/></symbol>
+<symbol viewBox="0 0 256 256" fill="currentColor" id="ph-x"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></symbol>
+<symbol viewBox="0 0 256 256" fill="currentColor" id="ph-dt-caret-down"><path d="M208,96l-80,80L48,96Z" opacity="0.2"/><path d="M215.39,92.94A8,8,0,0,0,208,88H48a8,8,0,0,0-5.66,13.66l80,80a8,8,0,0,0,11.32,0l80-80A8,8,0,0,0,215.39,92.94ZM128,164.69,67.31,104H188.69Z"/></symbol>
+</svg>
+
+<div class="topbar">
+  <h1><span data-i18n="h1.corto">F TRADER</span><span class="h1-largo" data-i18n="h1.largo"> — CON CUÁNTO TRADEAR</span></h1>
+  <button class="icono redondo" id="btnAyuda" data-i18n-title="acc.como" data-i18n-al="acc.como" title="Cómo usarla" aria-label="Cómo usarla">
+    <svg class="ph"><use href="#ph-dt-question"/></svg></button>
+  <span class="crece"></span>
+  <button class="icono" id="btnCom" hidden data-i18n-title="cfg.h" title="Comisiones y contrato">
+    <svg class="ph"><use href="#ph-dt-gear"/></svg><span data-i18n="acc.comCorto">comisiones</span></button>
+  <button class="icono" id="btnTema" data-i18n-title="acc.tema" title="Tema">
+    <svg class="ph"><use href="#ph-dt-moon"/></svg></button>
+  <button class="icono" id="save" data-i18n-title="acc.save" data-i18n-al="acc.save" title="Guardar archivo cifrado" aria-label="Guardar archivo cifrado">
+    <svg class="ph"><use href="#ph-dt-download"/></svg></button>
+  <button class="icono" id="load" data-i18n-title="acc.load" data-i18n-al="acc.load" title="Cargar archivo cifrado" aria-label="Cargar archivo cifrado">
+    <svg class="ph"><use href="#ph-dt-upload"/></svg></button>
+  <button class="icono" id="btnImp" data-i18n-title="acc.imp" data-i18n-al="acc.imp" title="Importar pegando celdas" aria-label="Importar pegando celdas">
+    <svg class="ph"><use href="#ph-dt-clipboard-text"/></svg></button>
+  <button class="icono" id="link" data-i18n-title="acc.link" data-i18n-al="acc.link" title="Copiar enlace cifrado" aria-label="Copiar enlace cifrado">
+    <svg class="ph"><use href="#ph-dt-link-simple"/></svg></button>
+  <button class="icono solo-movil" id="btnMenu" data-i18n-title="menu.h" data-i18n-al="menu.h" title="Opciones" aria-label="Opciones"
+          aria-haspopup="dialog">
+    <svg class="ph"><use href="#ph-dt-dots-three-circle"/></svg></button>
+  <input type="file" id="file" accept=".json,application/json" hidden>
+</div>
+
+<noscript>
+  <style>
+    /* Without JS the page is a skeleton: a table with no rows, cards reading "—" and
+       the config panel out of place. Better to hide it and say what happened. */
+    .sub, section, #cfgCuerpo, footer, .cierre, .topbar .icono{display:none!important}
+  </style>
+  <div class="sinjs">
+    <h2 data-i18n="njs.h">Hace falta JavaScript</h2>
+    <p data-i18n-html="njs.p1">La planilla calcula, guarda y cifra <strong>dentro del navegador</strong>: no hay servidor que haga las cuentas, y por eso tampoco hay datos que salgan de esta máquina. Sin JavaScript no hay nada que mostrar.</p>
+    <p data-i18n="njs.p2">Si lo tenés bloqueado por una extensión, habilitalo sólo para este sitio.</p>
+  </div>
+</noscript>
+
+<p class="sub" data-i18n="sub">Planilla para registrar trades y saber con cuánto tradear. Una fórmula creada por traders, para traders, y conviene respetarla.</p>
+
+<dialog id="dlgMenu" class="hoja" tabindex="-1">
+  <button class="cerrarX" data-x data-i18n-al="cerrar" aria-label="Cerrar"><svg class="ph"><use href="#ph-x"/></svg></button>
+  <h3 data-i18n="menu.h">OPCIONES</h3>
+
+  <p class="grupo-rot" data-i18n="menu.ayuda">Ayuda</p>
+  <button class="fila" id="mAyuda" aria-expanded="false" aria-controls="ranuraAyudaHoja">
+    <svg class="ph"><use href="#ph-dt-question"/></svg>
+    <span data-i18n="acc.como">cómo usarla</span>
+    <svg class="ph chevron"><use href="#ph-dt-caret-down"/></svg></button>
+  <div class="desplegable" id="ranuraAyudaHoja" hidden></div>
+
+  <p class="grupo-rot" data-i18n="menu.ajustes">Ajustes</p>
+  <button class="fila" id="mTema"><svg class="ph"><use href="#ph-dt-moon"/></svg>
+    <span><span data-i18n="acc.tema">tema</span><b id="mTemaEstado"></b></span></button>
+  <button class="fila" id="mCom" hidden><svg class="ph"><use href="#ph-dt-gear"/></svg>
+    <span data-i18n="acc.com">comisiones y tipos de contrato</span></button>
+
+  <p class="grupo-rot" data-i18n="menu.datos">Datos</p>
+  <button class="fila" id="mImp"><svg class="ph"><use href="#ph-dt-clipboard-text"/></svg>
+    <span data-i18n="acc.imp">importar pegando celdas</span></button>
+  <button class="fila" id="mSave"><svg class="ph"><use href="#ph-dt-download"/></svg>
+    <span data-i18n="acc.save">guardar archivo cifrado</span></button>
+  <button class="fila" id="mLoad"><svg class="ph"><use href="#ph-dt-upload"/></svg>
+    <span data-i18n="acc.load">cargar archivo cifrado</span></button>
+  <button class="fila" id="mLink"><svg class="ph"><use href="#ph-dt-link-simple"/></svg>
+    <span data-i18n="acc.link">copiar enlace cifrado</span></button>
+
+  <div class="cerrar"><button class="primary" data-cierra>OK</button></div>
+</dialog>
+
+<dialog id="dlgAyuda" tabindex="-1">
+  <button class="cerrarX" data-x data-i18n-al="cerrar" aria-label="Cerrar"><svg class="ph"><use href="#ph-x"/></svg></button>
+  <h3 data-i18n="ayuda.h">¿CÓMO USARLA?</h3>
+  <div id="ranuraAyudaDlg">
+    <div id="ayudaCuerpo">
+      <ol>
+    <li data-i18n="ayuda.1">Completa datos del exchange: comisiones, tipo de contrato y formato de numeración.</li>
+    <li data-i18n="ayuda.2">Carga posiciones de paper trading y/o reales, según tu etapa de aprendizaje.</li>
+    <li data-i18n="ayuda.3">Analiza la influencia de los resultados en la cantidad que la fórmula sugiere tradear.</li>
+  </ol>
+    </div>
+  </div>
+  <div class="cerrar"><button class="primary" data-cierra>OK</button></div>
+</dialog>
+
+<dialog id="dlgCampos" tabindex="-1">
+  <button class="cerrarX" data-x data-i18n-al="cerrar" aria-label="Cerrar"><svg class="ph"><use href="#ph-x"/></svg></button>
+  <h3 data-i18n="glos.h">GLOSARIO DE LA TABLA</h3>
+  <dl>
+    <dt data-i18n="g.dia">DIA</dt><dd data-i18n-html="g.dia.d">Fecha de la operación. Con un mes elegido se muestra el día de la semana; en «todos los meses», el formato DD/MM/AA.</dd>
+    <dt data-i18n="g.cripto">CRIPTO</dt><dd data-i18n-html="g.cripto.d">Activo operado: BTC, NANO, XMR.</dd>
+    <dt data-i18n="g.par">PAR</dt><dd data-i18n-html="g.par.d">Moneda en que cotiza el par. USDT para BTCUSDT o NANOUSDT. BTC para pares como TRXBTC: en ese caso los precios se cargan y se muestran en <strong>satoshis</strong>.</dd>
+    <dt data-i18n="g.pos">POSICION</dt><dd data-i18n-html="g.pos.d">LONG para una compra que espera vender arriba; SHORT para una venta que espera liquidar abajo.</dd>
+    <dt data-i18n="g.x">X</dt><dd data-i18n-html="g.x.d">Apalancamiento (margen). En 1 se desactiva; multiplica por igual la ganancia y la pérdida. <strong>Tope de 20x</strong>: más allá, un stop y una liquidación son el mismo evento.</dd>
+    <dt data-i18n="g.entrada">ENTRADA</dt><dd data-i18n-html="g.entrada.d">Precio de apertura de la posición.</dd>
+    <dt data-i18n="g.ml">M/L</dt><dd data-i18n-html="g.ml.d">Tipo de orden de entrada. <strong>M</strong> = market, <strong>L</strong> = limit. Determina la comisión aplicada.</dd>
+    <dt data-i18n="g.sl">STOP LOSS</dt><dd data-i18n-html="g.sl.d">Límite en el precio cuando el trade se mueve contra la posición.</dd>
+    <dt data-i18n="g.tp">TAKE PROFIT</dt><dd data-i18n-html="g.tp.d">Precio de cierre esperado en ganancia. Expectativa previa donde se planea liquidar.</dd>
+    <dt data-i18n="g.salida">SALIDA</dt><dd data-i18n-html="g.salida.d">Precio real de cierre. Es el que define el resultado de la operación.</dd>
+    <dt data-i18n="g.lm">L/M</dt><dd data-i18n-html="g.lm.d">Tipo de orden de salida. <strong>M</strong> = market, <strong>L</strong> = limit.</dd>
+    <dt data-i18n="g.rrr">RRR</dt><dd data-i18n-html="g.rrr.d">Ratio riesgo/beneficio, diferencia porcentual entre STOP LOSS y TAKE PROFIT.</dd>
+    <dt data-i18n="g.ret">RETORNO</dt><dd data-i18n-html="g.ret.d">Resultado final sobre el margen, con comisiones descontadas (si fueron activadas).</dd>
+  </dl>
+  <div class="cerrar"><button class="primary" data-cierra>OK</button></div>
+</dialog>
+
+
+<dialog id="dlgCfg" tabindex="-1">
+  <button class="cerrarX" data-x data-i18n-al="cerrar" aria-label="Cerrar"><svg class="ph"><use href="#ph-x"/></svg></button>
+  <h3><span data-i18n="cfg.h">COMISIONES Y TIPOS DE CONTRATO</span></h3>
+  <div id="ranuraDlg"></div>
+  <div class="cerrar">
+    <button id="btnInfo2" type="button" aria-expanded="false" aria-controls="cfgInfo"
+            data-i18n="cfg.info">INFO</button>
+    <button class="primary" id="cfgOk">OK</button>
+  </div>
+</dialog>
+
+<dialog id="dlgPass" tabindex="-1">
+  <button class="cerrarX" data-x data-i18n-al="cerrar" aria-label="Cerrar"><svg class="ph"><use href="#ph-x"/></svg></button>
+  <h3><span id="passTitulo"></span></h3>
+  <p class="txt" id="passAyuda"></p>
+  <label for="pass1" data-i18n="pass.1">contraseña</label>
+  <input type="password" id="pass1" autocomplete="off">
+  <div id="pass2Caja">
+    <label for="pass2" data-i18n="pass.2">repetir contraseña</label>
+    <input type="password" id="pass2" autocomplete="off">
+  </div>
+  <label class="check" id="limpiarCaja">
+    <input type="checkbox" id="limpiar">
+    <span data-i18n="pass.limpiar">vaciar el navegador después de descargar</span>
+  </label>
+  <p class="err" id="passErr" hidden><svg class="ph"><use href="#ph-dt-warning-circle"/></svg><span></span></p>
+  <div class="cerrar">
+    <button id="passCancel" data-i18n="cancelar">cancelar</button>
+    <button class="primary" id="passOk">OK</button>
+  </div>
+</dialog>
+
+<dialog id="dlgImp" tabindex="-1">
+  <button class="cerrarX" data-x data-i18n-al="cerrar" aria-label="Cerrar"><svg class="ph"><use href="#ph-x"/></svg></button>
+  <h3><svg class="ph"><use href="#ph-dt-clipboard-text"/></svg> <span data-i18n="imp.h">IMPORTAR TRADES</span></h3>
+  <p class="txt" data-i18n="imp.p">Copiar las celdas en la planilla y pegarlas acá. Nada sale del navegador.</p>
+  <textarea id="impPegar" class="zona-pegar" rows="3" spellcheck="false" autocomplete="off"
+            data-i18n-ph="imp.ph" data-i18n-al="imp.zona"
+            placeholder="Pegar acá (Ctrl+V)" aria-label="Pegar las celdas"></textarea>
+  <p class="txt" data-i18n="imp.ayuda">Funciona desde LibreOffice, Excel, Google Sheets, .xlsx, .xlsm y .ods: se copian las celdas, no se abre el archivo.</p>
+
+  <div id="impCuerpo" hidden>
+    <p class="imp-conteo" id="impConteo"></p>
+    <div class="scroll imp-scroll"><table id="impTabla"></table></div>
+    <div class="imp-opts">
+      <fieldset id="impFsFecha">
+        <legend data-i18n="imp.fecha">fecha</legend>
+        <label class="check"><input type="radio" name="impDia" value="dma" checked>
+          <span data-i18n="imp.dma">día/mes/año</span></label>
+        <label class="check"><input type="radio" name="impDia" value="mda">
+          <span data-i18n="imp.mda">mes/día/año</span></label>
+      </fieldset>
+      <fieldset id="impFsNum">
+        <legend data-i18n="imp.numero">número</legend>
+        <label class="check"><input type="radio" name="impDec" value="," checked> <span>1.234,56</span></label>
+        <label class="check"><input type="radio" name="impDec" value="."> <span>1,234.56</span></label>
+      </fieldset>
+    </div>
+  </div>
+
+  <div class="cerrar">
+    <button id="impCancel" data-i18n="cancelar">cancelar</button>
+    <button class="primary" id="impOk" disabled>OK</button>
+  </div>
+</dialog>
+
+<dialog id="dlgAviso" tabindex="-1">
+  <button class="cerrarX" data-x data-i18n-al="cerrar" aria-label="Cerrar"><svg class="ph"><use href="#ph-x"/></svg></button>
+  <h3><svg class="ph"><use href="#ph-dt-warning-circle"/></svg> <span id="avisoTitulo"></span></h3>
+  <p class="txt" id="avisoTexto"></p>
+  <div class="cerrar"><button class="primary" id="avisoOk">OK</button></div>
+</dialog>
+
+<dialog id="dlgConf" tabindex="-1">
+  <button class="cerrarX" data-x data-i18n-al="cerrar" aria-label="Cerrar"><svg class="ph"><use href="#ph-x"/></svg></button>
+  <h3><svg class="ph"><use href="#ph-dt-warning-circle"/></svg> <span id="confTitulo"></span></h3>
+  <p class="txt" id="confTexto"></p>
+  <div class="cerrar">
+    <button id="confNo" data-i18n="cancelar">cancelar</button>
+    <button class="primary" id="confSi">OK</button>
+  </div>
+</dialog>
+
+<section class="paso" id="secCfg">
+  <h2><span data-i18n="sec1">DATOS DEL EXCHANGE</span></h2>
+  <div id="ranuraSec"></div>
+  <div class="acciones-tabla">
+    <button class="primary" id="cfgListo" data-i18n="cfg.listo">guardar y continuar</button>
+    <button id="btnInfo" type="button" aria-expanded="false" aria-controls="cfgInfo"
+            data-i18n="cfg.info">INFO</button>
+  </div>
+</section>
+
+<div id="cfgCuerpo">
+ <div id="cfgControles">
+  <div class="cfg">
+    <div>
+      <label for="margen" data-i18n="lbl.margen">TIPO DE CONTRATO</label>
+      <select id="margen">
+        <option value="lineal" data-i18n="opt.lineal">Lineal (USDT)</option>
+        <option value="inverso" data-i18n="opt.inverso">Inverso (cripto)</option>
+      </select>
+    </div>
+    <div>
+      <label for="locale" data-i18n="lbl.num">NUMERACIÓN</label>
+      <span class="con-muestra">
+        <select id="locale"></select>
+        <span class="muestra" id="muestraNum"></span>
+      </span>
+    </div>
+  </div>
+  <div class="cfg cfg-2">
+    <div class="grupo">
+      <label data-i18n="lbl.com">COMISIONES %</label>
+      <div class="tasas">
+        <label class="switch" data-i18n-title="sw.title" title="Descontar comisiones del Retorno">
+          <input type="checkbox" id="feesOn" checked><span data-i18n="sw.aplicar">aplicar</span>
+        </label>
+        <span class="tasa"><i>LIMIT</i><input type="text" inputmode="decimal" id="feeLimit" value="0,02"></span>
+        <span class="tasa"><i>MARKET</i><input type="text" inputmode="decimal" id="feeMarket" value="0,05"></span>
+        <span class="aviso-fee" id="avisoFee" hidden></span>
+      </div>
+    </div>
+  </div>
+ </div>
+
+  <div class="info" id="cfgInfo" hidden>
+    <h4 data-i18n="i.contrato">TIPO DE CONTRATO</h4>
+      <p class="txt" data-i18n="i.contrato.p">Define cómo se mide el retorno sobre el margen. Es una característica del contrato
+        del exchange, distinta del PAR de cada fila.</p>
+      <dl>
+        <dt data-i18n="opt.lineal">Lineal (USDT)</dt>
+        <dd data-i18n="i.lineal.d">El margen se deposita en USDT y el retorno divide por la ENTRADA. Es lo habitual en los
+          contratos USDⓈ-M de Binance, Bybit, MEXC u OKX.</dd>
+        <dt data-i18n="opt.inverso">Inverso (cripto)</dt>
+        <dd data-i18n="i.inverso.d">El margen se deposita en la propia cripto y el retorno divide por la SALIDA. Corresponde a
+          los contratos coin-margined.</dd>
+      </dl>
+    
+      <h4 data-i18n="i.com">COMISIONES</h4>
+      <p class="txt" data-i18n-html="i.com.p">Se expresan en % por operación y se cobran sobre el nocional, no sobre el resultado:
+        a X veces de apalancamiento el costo es <code>tasa × X</code>. Se descuentan dos veces, una al
+        entrar y otra al salir, según el tipo de orden de cada lado.</p>
+      <div class="subsec">
+        <h5 data-i18n="i.como">¿Cómo funciona?</h5>
+        <p data-i18n-html="i.como.p">En <strong>aplicar</strong> se descuentan las comisiones de entrada y de salida. Sin marcar, las comisiones no se contemplan y se deshabilitan.</p>
+          <p class="txt" data-i18n="i.com.p2">Setearlos según el exchange y rango allí funcional.</p>
+      </div>
+      <dl>
+        <dt>LIMIT</dt><dd data-i18n="i.limit.d">Tasa de quien agrega liquidez en el libro de órdenes (maker). Suele ser la más barata.</dd>
+        <dt>MARKET</dt><dd data-i18n="i.market.d">Tasa de quien retira la liquidez (taker). Suele ser la más cara.</dd>
+        <dt data-i18n="i.neg">Valor negativo</dt>
+        <dd data-i18n-html="i.neg.d">Es un <em>rebate</em>: el exchange paga por proveer liquidez, así que suma al Retorno en vez de restar.</dd>
+      </dl>
+    
+      <h4 data-i18n="i.num">NUMERACIÓN</h4>
+      <p class="txt" data-i18n="i.num.p">Define cómo se separan los miles y los decimales en toda la planilla. El mismo
+        número, en tres convenciones:</p>
+      <p class="txt"><span id="ejemplosNum"></span></p>
+  </div>
+</div>
+
+<section class="paso">
+  <h2><span data-i18n="sec2">TABLA DE POSICIONES</span>
+    <button class="icono redondo" id="btnCampos" data-i18n-title="glos.h" data-i18n-al="glos.h" title="Glosario de la tabla"
+            aria-label="Glosario de la tabla">
+      <svg class="ph"><use href="#ph-dt-question"/></svg></button>
+    <span class="mes">
+      <svg class="ph"><use href="#ph-dt-funnel"/></svg>
+      <select id="mes" class="w-mes" data-i18n-al="mes.al" aria-label="Mes a mostrar"></select>
+    </span>
+  </h2>
+  <div class="scroll-caja">
+  <div class="scroll">
+    <table id="tabla">
+      <thead><tr>
+        <th class="w-dia" data-i18n="th.dia">DIA</th><th class="w-cri" data-i18n="th.cripto">CRIPTO</th><th class="w-par" data-i18n="th.par">PAR</th><th class="w-pos" data-i18n="th.pos">POSICION</th>
+        <th class="w-x" data-i18n="th.x" data-i18n-title="t.x" title="Apalancamiento. Tope de 20x por convención: más allá, un stop y una liquidación son el mismo evento.">X</th><th class="w-pri pegado" data-i18n="th.entrada">ENTRADA</th>
+        <th class="w-ord" data-i18n-title="th.ml.t" title="Tipo de orden de entrada. M = market, L = limit.">M/L</th>
+        <th class="w-pri" data-i18n="th.sl">STOP LOSS</th><th class="w-pri" data-i18n="th.tp">TAKE PROFIT</th>
+        <th class="w-pri h-sal pegado" data-i18n="th.salida">SALIDA</th>
+        <th class="w-ord" data-i18n-title="th.lm.t" title="Tipo de orden de salida. M = market, L = limit.">M/L</th>
+        <th class="w-rrr" data-i18n="th.rrr">RRR</th><th class="res w-ret" data-i18n="th.ret">RETORNO</th><th class="w-del"></th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+  </div>
+  <div class="acciones-tabla">
+    <button class="primary" id="add" data-i18n="add">agregar</button>
+    <button id="clear" data-i18n="clear">vaciar</button>
+  </div>
+  <p class="hint" data-i18n="hint.tabla">
+    Con PAR en BTC los precios se escriben en satoshis; con PAR en USDT, en la moneda del par.
+  </p>
+</section>
+
+<section class="paso">
+  <h2><span data-i18n="sec3">FÓRMULAS Y RESULTADOS</span></h2>
+  <div class="g-cab">
+    <div>
+      <h3 data-i18n="est.h">ESTADO ACTUAL</h3>
+      <p class="g-nota" data-i18n="est.p">Un resumen de todos los trades cerrados hasta hoy: cuánto rinden en promedio, cuántos aciertan y con cuánto capital sugiere operar la fórmula.</p>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat" data-i18n-title="st.prom.t" title="Promedio simple del Retorno de todos los trades cerrados.&#10;Se interpreta junto a la esperanza matemática y el RRR.">
+      <div class="k" data-i18n="st.prom">PROMEDIO RESULTADOS</div><div class="v" id="s-prom">—</div><div class="mesval" hidden></div></div>
+    <div class="stat" data-i18n-title="st.wl.t" title="Porcentaje de trades cerrados en ganancia y en pérdida. Ideal por encima del 50% de aciertos.">
+      <div class="k" data-i18n="st.wl">ACIERTOS / PÉRDIDAS</div>
+      <div class="v"><span id="s-win">—</span> <span class="barra">/</span> <span id="s-loss">—</span></div>
+      <div class="mesval" hidden></div></div>
+    <div class="stat destacado" data-i18n-title="st.f.t" title="Referencia orientativa del capital a arriesgar por trade.">
+      <div class="k" data-i18n="st.f">F TRADER – CAPITAL A TRADEAR</div><div class="v" id="s-f">—</div><div class="mesval" hidden></div></div>
+  </div>
+  <div class="avisos" id="avisos"></div>
+  <figure class="grafico" id="grafico" hidden>
+    <figcaption class="g-cab">
+      <div>
+        <h3 data-i18n="g.h">HISTORIAL</h3>
+        <p class="g-nota" id="g-nota"></p>
+      </div>
+    </figcaption>
+    <div class="g-leyenda">
+      <span class="g-ll g-res"><i></i><span id="g-resRot">resultado del trade</span>
+        <b id="g-resVal"></b></span>
+      <span class="g-ll g-f"><i></i><span data-i18n="g.f">F TRADER</span>
+        <b id="g-fVal"></b></span>
+      <span class="g-ll g-wl"><i></i><span data-i18n="g.wl">aciertos / pérdidas</span>
+        <b id="g-wlVal"></b></span>
+      <span class="g-per">
+        <span class="g-cuando" id="g-cuando"></span>
+        <button class="g-limpiar" id="g-limpiar" type="button"
+                data-i18n-al="g.limpiar" aria-label="limpiar la selección">
+          <svg class="ph"><use href="#ph-x"/></svg></button>
+      </span>
+    </div>
+    <div class="g-rot" aria-hidden="true">
+      <span id="g-rotIzq"></span><span id="g-rotDer"></span>
+    </div>
+    <div class="g-caja">
+      <div class="g-eje g-izq" id="g-izq" aria-hidden="true"></div>
+      <svg id="g-svg" viewBox="0 0 640 180" preserveAspectRatio="none"
+           role="img" aria-describedby="g-alt"></svg>
+      <div class="g-eje g-der" id="g-der" aria-hidden="true"></div>
+      <div class="g-x" id="g-x"></div>
+    </div>
+    <p class="g-rotX" id="g-rotX" aria-hidden="true"></p>
+    <p class="g-pista" id="g-pista">Clic o arrastre sobre el gráfico para ver un período.</p>
+    <p class="g-alt" id="g-alt"></p>
+  </figure>
+
+</section>
+
+<footer>
+  <h2 data-i18n="pie.h">TUS DATOS</h2>
+  <p data-i18n="pie.1">La planilla es open-source y se guarda en la sesión de tu navegador — Puede perderse si compartes dispositivos o borras su historial.</p>
+  <p data-i18n="pie.2">Desde los botones de arriba puedes descargar un archivo cifrado y copiar un enlace para enviar.</p>
+</footer>
+
+<div class="cierre">
+    <p class="fina" data-i18n="pie.fina">El cifrado es AES-GCM 256 con PBKDF2-SHA256 y ocurre en el navegador.
+      Sin contraseña, el registro se pierde y no hay recuperación.</p>
+    <nav class="contacto">
+      <a href="https://github.com/somos-criptonautas" title="github" aria-label="github"><svg class="ph"><use href="#ph-dt-github-logo"/></svg></a>
+      <a href="https://comunidad.criptonautas.co" title="comunidad" aria-label="comunidad"><svg class="ph"><use href="#ph-dt-chats-circle"/></svg></a>
+      <a href="https://smp.criptonautas.co/a#jlQudy-raESVSgaMhw1yXYexTe9ylYcWF3GgE6B_Lxk?h=gurmcczwfsprtvp25od2oxog7hxnfnbfuf7lgbi2dvceocgwojc5c5qd.onion&c=dEqUSGgoFhiY-CrPVQ5dBvoL59nW2WBNE_WcCHBkI5I" title="simplex" aria-label="simplex"><svg class="ph"><use href="#ph-dt-shield-star"/></svg></a>
+      <a id="mailContacto" title="e-mail" aria-label="e-mail"><svg class="ph"><use href="#ph-dt-envelope"/></svg></a>
+  </nav>
+</div>
+
+<script src="app.js" defer></script>

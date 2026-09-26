@@ -1,0 +1,12 @@
+{
+  "name": "f-trader",
+  "version": "1.0.0",
+  "description": "A single-page trading journal that computes how much capital to risk. Leverage capped at 20x by convention. No server, no accounts: everything stays in the browser.",
+  "license": "AGPL-3.0-or-later",
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "test": "node test.mjs"
+  },
+  "engines": { "node": ">=20" }
+}

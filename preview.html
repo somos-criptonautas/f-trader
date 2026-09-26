@@ -1,0 +1,57 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>F TRADER — CON CUÁNTO TRADEAR</title>
+
+<!-- Página pública: lo único que existe acá son las etiquetas de previsualización
+     y un botón para entrar. No hay datos ni cálculo. nginx la sirve cuando
+     Authentik responde 401, así el onebox de Discourse siempre encuentra algo
+     que leer aunque la planilla esté cerrada. Si se cambian las etiquetas de
+     index.html, cambiarlas también acá. -->
+<meta name="description" content="Planilla para registrar trades y saber con cuánto tradear. Sin cuentas ni servidor: los datos quedan en el navegador.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Criptonautas">
+<meta property="og:locale" content="es_AR">
+<meta property="og:title" content="F Trader — Con cuánto tradear">
+<meta property="og:description" content="Registra operaciones y calcula con cuánto tradear. Sin cuentas ni servidor: los datos quedan en el navegador.">
+<meta property="og:url" content="https://calc.criptonautas.co/">
+<meta property="og:image" content="https://calc.criptonautas.co/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="F Trader — promedio, aciertos y cuánto capital usar.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d0f14" media="(prefers-color-scheme: dark)">
+
+<style>
+/* Paired with the criptonautas.co Headline theme. Font URLs are absolute: nginx
+   serves this page for any unauthenticated path, so relative ones would break. */
+@font-face{font-family:"Inter Tight";font-weight:100 500;font-display:swap;src:url("/fonts/inter-tight-400.woff2") format("woff2")}
+@font-face{font-family:"Inter Tight";font-weight:501 700;font-display:swap;src:url("/fonts/inter-tight-600.woff2") format("woff2")}
+@font-face{font-family:"Inter Tight";font-weight:701 1000;font-display:swap;src:url("/fonts/inter-tight-800.woff2") format("woff2")}
+:root{--bg:#f6f7f9;--panel:#fff;--line:#dfe3ea;--txt:#1b1f28;--dim:#616b7d;
+  --acc:#d14806;--acc-txt:#c34306;--acc-fuerte:#b83f05}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0d0f14;--panel:#1e2532;--line:#3a4356;--txt:#e8eaf0;--dim:#8d95a8;
+    --acc:#5107ed;--acc-txt:#b080fd;--acc-fuerte:#621af8}
+}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;padding:1.5rem;
+  background:var(--bg);color:var(--txt);
+  font:1.0625rem/1.55 "Inter Tight",ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif}
+main{max-width:34rem;background:var(--panel);border:1px solid var(--line);
+  border-radius:0.375rem;padding:2rem}
+h1{margin:0 0 0.75rem;font-size:1.25rem;letter-spacing:.08em;color:var(--acc-txt);font-weight:800}
+p{margin:0 0 1rem;color:var(--dim)}
+a.entrar{display:inline-block;margin-top:0.5rem;padding:0.625rem 1.25rem;
+  background:var(--acc);color:#fff;text-decoration:none;border-radius:0.4375rem;font-weight:700;
+  transition:background-color .12s ease}
+a.entrar:hover{background:var(--acc-fuerte)}
+</style>
+
+<main>
+  <h1>F TRADER</h1>
+  <p>Planilla para registrar trades y saber con cuánto capital tradear, de acuerdo a las
+    operaciones registradas. Sin cuentas y sin servidor: los datos quedan en tu navegador.</p>
+  <p>Para usarla debes iniciar sesión (es gratis):</p>
+  <a class="entrar" href="/outpost.goauthentik.io/start?rd=/">Entrar</a>
+</main>
