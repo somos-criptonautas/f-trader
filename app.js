@@ -617,7 +617,7 @@ function serie(pares, porMes){
   let suma = 0, cuantos = 0;
   for(const p of pares){
     rets.push(p.retorno);
-    /* ponytail: stats() re-reduces the whole prefix at every point, so this is
+    /* stats() re-reduces the whole prefix at every point, so this is
        O(n^2). At journal sizes it is microseconds; make stats incremental only if
        it ever shows up. */
     const st = stats(rets);
