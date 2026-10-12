@@ -209,7 +209,8 @@ const sinDom = [...usados].filter((i) => !ids.has(i));
 // A missing id throws on load and aborts the whole script: that happened once.
 ok("every $(id) exists in the DOM", sinDom.length === 0, sinDom.join(" "));
 const iconos = new Set([...html.matchAll(/<use href="#([a-z0-9-]+)"/g)].map((m) => m[1]));
-const simbolos = new Set([...html.matchAll(/<symbol[^>]*id="([a-z0-9-]+)"/g)].map((m) => m[1]));
+// <use> may also point at a <g> in <defs>: the brand symbol is built that way.
+const simbolos = new Set([...html.matchAll(/<(?:symbol|g)[^>]*id="([a-z0-9-]+)"/g)].map((m) => m[1]));
 const sinSimbolo = [...iconos].filter((i) => !simbolos.has(i));
 ok("every icon exists in the sprite", sinSimbolo.length === 0, sinSimbolo.join(" "));
 

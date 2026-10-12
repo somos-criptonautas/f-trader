@@ -118,7 +118,7 @@ que haya en el navegador, así que primero pide confirmación.
 | `index.html` | marcado, el sprite de iconos y los textos en español |
 | `app.js` | lógica — primero lo que no toca el DOM, después lo que sí |
 | `app.css` | estilos, claro y oscuro |
-| `fonts/` | Inter Tight 400/600/800, del tema Headline de criptonautas.co, con su licencia OFL |
+| `fonts/` | Inter Tight, un único archivo variable tomado del kit de marca de Criptonautas, con su licencia OFL |
 | `test.mjs` | las pruebas |
 | `og.png` | imagen de previsualización |
 | `preview.html` | página pública para los rastreadores cuando la app está detrás de auth |
@@ -155,7 +155,10 @@ un fork ofrecido como servicio tiene que publicar sus cambios. Para una herramie
 cuya única promesa es que tus datos se quedan en tu navegador, esa verificabilidad
 es justamente el punto.
 
-Las fuentes de `fonts/` (Inter Tight) no están bajo AGPL: tienen su propia licencia,
-SIL OFL 1.1, incluida en [`fonts/OFL.txt`](fonts/OFL.txt).
+La fuente de `fonts/` (Inter Tight) no está bajo AGPL: tiene su propia licencia,
+SIL OFL 1.1, incluida en [`fonts/OFL-inter-tight.txt`](fonts/OFL-inter-tight.txt).
+El símbolo de Criptonautas
+de la barra superior es la marca de la comunidad, de uso abierto con las reglas
+publicadas en <https://criptonautas.co/kit>.
 
 Texto de este README bajo [CC BY-NC-SA 4.0](CC-BY-NC-SA-4.0.txt).

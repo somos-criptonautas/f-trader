@@ -110,7 +110,7 @@ It overwrites whatever is in the browser, so it asks first.
 | `index.html` | markup, the icon sprite and the Spanish copy |
 | `app.js` | logic — DOM-free code first, then everything that touches the document |
 | `app.css` | styles, light and dark |
-| `fonts/` | Inter Tight 400/600/800, from the criptonautas.co Headline theme, with its OFL licence |
+| `fonts/` | Inter Tight, one variable file taken from the Criptonautas brand kit, with its OFL licence |
 | `test.mjs` | the test suite |
 | `og.png` | link preview image |
 | `preview.html` | public page served to crawlers when the app sits behind auth |
@@ -146,7 +146,10 @@ merely hosts a modified copy. The AGPL closes that gap, so a fork offered as a
 service has to publish its changes. For a tool whose whole claim is that your data
 stays in your browser, that verifiability is the point.
 
-The fonts in `fonts/` (Inter Tight) are not AGPL: they carry their own SIL OFL 1.1
-licence, included in [`fonts/OFL.txt`](fonts/OFL.txt).
+The font in `fonts/` (Inter Tight) is not AGPL: it carries its own SIL OFL 1.1
+licence, included in [`fonts/OFL-inter-tight.txt`](fonts/OFL-inter-tight.txt).
+The Criptonautas symbol in
+the top bar is the community's mark, open to use under the rules published at
+<https://criptonautas.co/kit>.
 
 Text of this README under [CC BY-NC-SA 4.0](CC-BY-NC-SA-4.0.txt).

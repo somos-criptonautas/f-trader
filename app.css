@@ -2,50 +2,50 @@
    Copyright (C) 2026 Criptonautas */
 /* REGISTRO DE TRADES — styles. Loaded by index.html; no build step. */
 
-/* Inter Tight, from the criptonautas.co Headline theme (SIL OFL 1.1, fonts/OFL.txt).
-   Three static files cover the whole UI: each face claims a weight *range*, so
-   the 500 and 700 used across the stylesheet map to 600 and 800 predictably
-   instead of the browser guessing toward the heavier file. */
-@font-face{font-family:"Inter Tight";font-style:normal;font-weight:100 500;font-display:swap;
-  src:url("fonts/inter-tight-400.woff2") format("woff2")}
-@font-face{font-family:"Inter Tight";font-style:normal;font-weight:501 700;font-display:swap;
-  src:url("fonts/inter-tight-600.woff2") format("woff2")}
-@font-face{font-family:"Inter Tight";font-style:normal;font-weight:701 1000;font-display:swap;
-  src:url("fonts/inter-tight-800.woff2") format("woff2")}
+/* Inter Tight is the whole Criptonautas type system: headings and interface alike.
+   One variable file, taken as-is from the brand kit, covers every weight the
+   stylesheet asks for (SIL OFL 1.1, fonts/OFL-inter-tight.txt). */
+@font-face{font-family:"Inter Tight";font-style:normal;font-weight:100 900;font-display:swap;
+  src:url("fonts/inter-tight.woff2") format("woff2")}
 
-/* Palette paired with the criptonautas.co Headline theme: its orange in light, its
-   purple in dark. --acc is for solid fills that carry white text; --acc-txt is the
-   same hue adjusted to pass WCAG AA wherever the colour is drawn onto a surface
-   (text, borders, focus rings). Surfaces stay F Trader's own for contrast. */
+/* Palette from the Criptonautas brand kit (dist/color/tokens.json): Violeta Tinta
+   as the accent, Rojo Oxido for cautions, and the kit's own Exito/Error pair for
+   gains and losses. Surfaces are the warm greys the kit derives from Ink and Paper.
+   --acc is for solid fills that carry white text, so it stays the dark violet in
+   both themes; --acc-txt is the hue that passes WCAG AA when the colour is drawn
+   onto a surface (text, borders, focus rings), which in dark is the lighter violet.
+   --cn-a / --cn-b are the symbol's two fills in the top bar: the kit's
+   violeta-tinta-formas and rojo-oxido tokens. */
 /* light by default */
 :root{
-  --bg:#f6f7f9; --panel:#fff; --panel2:#f0f2f6; --calc:#f4f6fa;
-  --line:#dfe3ea; --line2:#c9d0dc;
-  --txt:#1b1f28; --dim:#616b7d; --acc:#d14806; --acc-txt:#c34306; --ok:#15803d; --bad:#c02b3a; --warn:#a16207;
-  --barra:rgba(255,255,255,.85); --sombra:0 1px 3px rgba(16,20,30,.07);
-  --bad-borde:rgba(192,43,58,.55); --acc-suave:rgba(209,72,6,0.09); --acc-tenue:rgba(209,72,6,0.07);
-  --acc-fuerte:#b83f05; --btn-hover:#e3e7ee;
+  --bg:#f8f8f8; --panel:#fff; --panel2:#eeece8; --calc:#f3f1ed;
+  --line:#dedbd6; --line2:#c8c4bd;
+  --txt:#1a1a1a; --dim:#5c5852; --acc:#5814ea; --acc-txt:#5814ea; --ok:#1f7a5c; --bad:#9e1b27; --warn:#e6211e;
+  --barra:rgba(248,248,248,.85); --sombra:0 1px 3px rgba(20,17,15,.09);
+  --bad-borde:rgba(158,27,39,.55); --acc-suave:rgba(88,20,234,0.09); --acc-tenue:rgba(88,20,234,0.07);
+  --acc-fuerte:#4710bc; --btn-hover:#e6e3de;
+  --cn-a:#5814ea; --cn-b:#e6211e;
   --radius:0.375rem;
 }
 /* dark: follow the system, unless overridden to light */
 @media (prefers-color-scheme:dark){
   :root:not([data-theme=light]){
-    --bg:#0d0f14; --panel:#1e2532; --panel2:#2a323f; --calc:#181d27;
-    --line:#3a4356; --line2:#4e5871;
-    --txt:#e8eaf0; --dim:#8d95a8; --acc:#5107ed; --acc-txt:#b080fd; --ok:#3fb96b; --bad:#e05561; --warn:#e0b155;
-    --barra:rgba(13,15,20,.88); --sombra:0 1px 3px rgba(0,0,0,.4);
-    --bad-borde:rgba(224,85,97,.6); --acc-suave:rgba(81,7,237,0.18); --acc-tenue:rgba(81,7,237,0.12);
-  --acc-fuerte:#621af8; --btn-hover:#1e2532;
+    --bg:#181719; --panel:#222024; --panel2:#2d2b30; --calc:#1e1d20;
+    --line:#3b393e; --line2:#4e4b52;
+    --txt:#f1f1f1; --dim:#b5b0aa; --acc:#5814ea; --acc-txt:#c89dff; --ok:#6dc08f; --bad:#ff8da5; --warn:#f98e76;
+    --barra:rgba(24,23,25,.88); --sombra:0 1px 3px rgba(0,0,0,.4);
+    --bad-borde:rgba(255,141,165,.6); --acc-suave:rgba(200,157,255,0.14); --acc-tenue:rgba(200,157,255,0.09);
+  --acc-fuerte:#6a2bf5; --btn-hover:#2d2b30; --cn-a:#7c36ff; --cn-b:#f98e76;
   }
 }
 /* explicit override to dark */
 :root[data-theme=dark]{
-  --bg:#0d0f14; --panel:#1e2532; --panel2:#2a323f; --calc:#181d27;
-  --line:#3a4356; --line2:#4e5871;
-  --txt:#e8eaf0; --dim:#8d95a8; --acc:#5107ed; --acc-txt:#b080fd; --ok:#3fb96b; --bad:#e05561; --warn:#e0b155;
-  --barra:rgba(13,15,20,.88); --sombra:0 1px 3px rgba(0,0,0,.4);
-  --bad-borde:rgba(224,85,97,.6); --acc-suave:rgba(81,7,237,0.18); --acc-tenue:rgba(81,7,237,0.12);
-  --acc-fuerte:#621af8; --btn-hover:#1e2532;
+  --bg:#181719; --panel:#222024; --panel2:#2d2b30; --calc:#1e1d20;
+  --line:#3b393e; --line2:#4e4b52;
+  --txt:#f1f1f1; --dim:#b5b0aa; --acc:#5814ea; --acc-txt:#c89dff; --ok:#6dc08f; --bad:#ff8da5; --warn:#f98e76;
+  --barra:rgba(24,23,25,.88); --sombra:0 1px 3px rgba(0,0,0,.4);
+  --bad-borde:rgba(255,141,165,.6); --acc-suave:rgba(200,157,255,0.14); --acc-tenue:rgba(200,157,255,0.09);
+  --acc-fuerte:#6a2bf5; --btn-hover:#2d2b30; --cn-a:#7c36ff; --cn-b:#f98e76;
 }
 *{box-sizing:border-box}
 /* .icono sets display:inline-flex, which beats the UA stylesheet's [hidden] */
@@ -62,6 +62,8 @@ body{margin:0 auto;padding:0 1.125rem 3rem;max-width:78rem;background:var(--bg);
   margin:0 0 2rem;padding:1.125rem 1.5rem;background:var(--barra);
   backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line);flex-wrap:wrap}
+.marca{display:inline-flex;flex:none;line-height:0;border-radius:var(--radius)}
+.simbolo{width:1.5rem;height:1.5rem}
 h1{font-size:1.25rem;letter-spacing:.08em;margin:0 0.375rem 0 0;color:var(--acc-txt);font-weight:800;
   min-width:0;white-space:nowrap}
 .crece{flex:1}
