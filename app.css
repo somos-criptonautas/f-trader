@@ -288,12 +288,13 @@ tr:hover .del{opacity:1}
 /* The icon names the kind of message before the sentence has to be read. */
 .aviso{display:flex;align-items:flex-start;gap:0.5rem;color:var(--warn);font-size:0.9375rem}
 .aviso .ph{width:1.25rem;height:1.25rem;flex-shrink:0;margin-top:0.0625rem}
-/* On the palette, and the right way round: the accent marks the notable state,
-   and caution belongs on the message that says to size down, not on the one that
-   says the odds are good. */
-.aviso.agresiva{color:var(--acc-txt)}
+/* Each red means one thing only: --bad is money lost, --warn is something to
+   correct. The three position messages are neither — they are the formula
+   describing itself, so they wear the accent. Only one of them ever renders,
+   so sharing a colour with the aggressive one costs nothing, and it leaves a
+   real warning as the only red in the block. */
+.aviso.agresiva,.aviso.conservadora{color:var(--acc-txt)}
 .aviso.neutral{color:var(--dim)}
-.aviso.conservadora{color:var(--warn)}
 
 /* ---------- footer ---------- */
 footer{border:1px solid var(--line);border-radius:var(--radius);padding:1.25rem 1.5rem;
