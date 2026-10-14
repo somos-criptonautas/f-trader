@@ -117,7 +117,7 @@ en:{
 "g.lm":"L/M","g.lm.d":"Exit order type. <strong>M</strong> = market, <strong>L</strong> = limit.",
 "g.rrr":"RRR","g.rrr.d":"Risk/reward ratio, the percentage gap between STOP LOSS and TAKE PROFIT.",
 "g.ret":"RETURN","g.ret.d":"Final result on margin, fees already deducted (when enabled).",
-"cfg.h":"FEES AND CONTRACT TYPES","cfg.info.t":"How each field works","cfg.info":"INFO","i.ocultar":"OCULTAR","cfg.listo":"save and continue",
+"cfg.h":"FEES AND CONTRACT TYPES","cfg.info.t":"How each field works","cfg.info":"INFO","i.ocultar":"OCULTAR","cfg.listo":"SAVE",
 "pass.1":"password","pass.2":"repeat password","pass.limpiar":"clear the browser after downloading",
 "sec1":"EXCHANGE DATA","sec2":"POSITIONS TABLE","sec3":"FORMULAS & RESULTS",
 "lbl.margen":"CONTRACT TYPE","opt.lineal":"Linear (USDT)","opt.inverso":"Inverse (crypto)",
@@ -215,7 +215,7 @@ en:{
 "e.sinCripto":"Encryption needs a secure context (https:// or file://).",
 "tema.auto":"automatic","tema.claro":"light","tema.oscuro":"dark",
 "fee.raras":"{k} above 1%. Did you mean 0,05 instead of 5?",
-"i.volver":"Back to the fields","i.ocultar":"HIDE","acc.comCorto":"fees",
+"i.volver":"Back to the fields","i.ocultar":"HIDE","acc.comCorto":"FEES",
 "h1.corto":"F TRADER","h1.largo":" — HOW MUCH TO TRADE"
 }};
 
@@ -1334,6 +1334,7 @@ $("cfgListo").onclick = () => {
 };
 $("btnCom").onclick      = () => abrir($("dlgCfg"));
 $("btnCampos").onclick   = () => abrir($("dlgCampos"));
+$("btnFormulas").onclick = () => abrir($("dlgFormulas"));
 /* The help runs about three screens: expanding it below the controls stretched the
    dialog and pushed OK out of sight. It replaces the fields instead, keeping the
    same height and the buttons still. */
@@ -2068,4 +2069,4 @@ async function init(){
   ordenar(); sincronizarCfg(); colocarCfg(); pintarMeses(); render(); refresh();
 }
 
-init();
+init().finally(() => document.documentElement.classList.add("listo"));

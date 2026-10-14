@@ -57,7 +57,7 @@
     <svg class="ph"><use href="#ph-dt-question"/></svg></button>
   <span class="crece"></span>
   <button class="icono" id="btnCom" hidden data-i18n-title="cfg.h" title="Comisiones y contrato">
-    <svg class="ph"><use href="#ph-dt-gear"/></svg><span data-i18n="acc.comCorto">comisiones</span></button>
+    <svg class="ph"><use href="#ph-dt-gear"/></svg><span data-i18n="acc.comCorto">COMISIONES</span></button>
   <button class="icono" id="btnTema" data-i18n-title="acc.tema" title="Tema">
     <svg class="ph"><use href="#ph-dt-moon"/></svg></button>
   <button class="icono" id="save" data-i18n-title="acc.save" data-i18n-al="acc.save" title="Guardar archivo cifrado" aria-label="Guardar archivo cifrado">
@@ -78,7 +78,7 @@
   <style>
     /* Without JS the page is a skeleton: a table with no rows, cards reading "—" and
        the config panel out of place. Better to hide it and say what happened. */
-    .sub, section, #cfgCuerpo, footer, .cierre, .topbar .icono{display:none!important}
+    .sub, section, #cfgCuerpo, footer, .cierre, .topbar .icono, #esqueleto{display:none!important}
   </style>
   <div class="sinjs">
     <h2 data-i18n="njs.h">Hace falta JavaScript</h2>
@@ -86,6 +86,11 @@
     <p data-i18n="njs.p2">Si lo tenés bloqueado por una extensión, habilitalo sólo para este sitio.</p>
   </div>
 </noscript>
+
+<div id="esqueleto" aria-hidden="true">
+  <span class="hueso h-sub"></span><span class="hueso h-cab"></span>
+  <span class="hueso h-caja"></span><span class="hueso h-caja"></span>
+</div>
 
 <p class="sub" data-i18n="sub">Planilla para registrar trades y saber con cuánto tradear. Una fórmula creada por traders, para traders, y conviene respetarla.</p>
 
@@ -155,6 +160,18 @@
   <div class="cerrar"><button class="primary" data-cierra>OK</button></div>
 </dialog>
 
+
+<dialog id="dlgFormulas" tabindex="-1">
+  <button class="cerrarX" data-x data-i18n-al="cerrar" aria-label="Cerrar"><svg class="ph"><use href="#ph-x"/></svg></button>
+  <h3 data-i18n="sec3">FÓRMULAS Y RESULTADOS</h3>
+  <dl>
+    <dt data-i18n="st.prom">PROMEDIO RESULTADOS</dt><dd data-i18n="st.prom.t">Promedio simple del Retorno de todos los trades cerrados. Se interpreta junto a la esperanza matemática y el RRR.</dd>
+    <dt data-i18n="st.wl">ACIERTOS / PÉRDIDAS</dt><dd data-i18n="st.wl.t">Porcentaje de trades cerrados en ganancia y en pérdida. Ideal por encima del 50% de aciertos.</dd>
+    <dt data-i18n="st.f">F TRADER – CAPITAL A TRADEAR</dt><dd data-i18n="st.f.t">Referencia orientativa del capital a arriesgar por trade.</dd>
+    <dt data-i18n="g.h">HISTORIAL</dt><dd data-i18n="g.nota">Cada trade cerrado, en orden: así llegaron las cifras de arriba a donde están hoy. Arrastrar o hacer clic sobre el gráfico para leer un período.</dd>
+  </dl>
+  <div class="cerrar"><button class="primary" data-cierra>OK</button></div>
+</dialog>
 
 <dialog id="dlgCfg" tabindex="-1">
   <button class="cerrarX" data-x data-i18n-al="cerrar" aria-label="Cerrar"><svg class="ph"><use href="#ph-x"/></svg></button>
@@ -243,7 +260,7 @@
   <h2><span data-i18n="sec1">DATOS DEL EXCHANGE</span></h2>
   <div id="ranuraSec"></div>
   <div class="acciones-tabla">
-    <button class="primary" id="cfgListo" data-i18n="cfg.listo">guardar y continuar</button>
+    <button class="primary" id="cfgListo" data-i18n="cfg.listo">GUARDAR</button>
     <button id="btnInfo" type="button" aria-expanded="false" aria-controls="cfgInfo"
             data-i18n="cfg.info">INFO</button>
   </div>
@@ -320,13 +337,13 @@
 
 <section class="paso">
   <h2><span data-i18n="sec2">TABLA DE POSICIONES</span>
-    <button class="icono redondo" id="btnCampos" data-i18n-title="glos.h" data-i18n-al="glos.h" title="Glosario de la tabla"
-            aria-label="Glosario de la tabla">
-      <svg class="ph"><use href="#ph-dt-question"/></svg></button>
     <span class="mes">
       <svg class="ph"><use href="#ph-dt-funnel"/></svg>
       <select id="mes" class="w-mes" data-i18n-al="mes.al" aria-label="Mes a mostrar"></select>
     </span>
+    <button class="icono redondo" id="btnCampos" data-i18n-title="glos.h" data-i18n-al="glos.h" title="Glosario de la tabla"
+            aria-label="Glosario de la tabla">
+      <svg class="ph"><use href="#ph-dt-question"/></svg></button>
   </h2>
   <div class="scroll-caja">
   <div class="scroll">
@@ -354,7 +371,11 @@
 </section>
 
 <section class="paso">
-  <h2><span data-i18n="sec3">FÓRMULAS Y RESULTADOS</span></h2>
+  <h2><span data-i18n="sec3">FÓRMULAS Y RESULTADOS</span>
+    <button class="icono redondo" id="btnFormulas" data-i18n-title="sec3" data-i18n-al="sec3"
+            title="FÓRMULAS Y RESULTADOS" aria-label="FÓRMULAS Y RESULTADOS">
+      <svg class="ph"><use href="#ph-dt-question"/></svg></button>
+  </h2>
   <div class="g-cab">
     <div>
       <h3 data-i18n="est.h">ESTADO ACTUAL</h3>
