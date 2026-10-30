@@ -40,6 +40,8 @@ es:{
 "t.cal":"Elegir en el calendario",
 "demo.h":"Reemplazar los trades cargados",
 "demo.txt":"?demo genera tres meses de trades de ejemplo y pisa los que están en este navegador. Guardá el archivo cifrado antes si los querés conservar.",
+"pisa.h":"Reemplazar los trades cargados",
+"pisa.txt":"Abrir estos datos pisa los trades de este navegador. Guardá el archivo cifrado antes si los querés conservar.",
 "g.res":"resultado del trade","g.resMes":"promedio del mes",
 "g.nota":"Cada trade cerrado, en orden: así llegaron las cifras de arriba a donde están hoy. Arrastrar o hacer clic sobre el gráfico para leer un período.",
 "g.notaMes":"El promedio de cada mes, en orden: así llegaron las cifras de arriba a donde están hoy. Arrastrar o hacer clic sobre el gráfico para leer un período.",
@@ -164,6 +166,8 @@ en:{
 "t.cal":"Pick from the calendar",
 "demo.h":"Replace the trades already here",
 "demo.txt":"?demo generates three months of sample trades and overwrites the ones in this browser. Save the encrypted file first if you want to keep them.",
+"pisa.h":"Replace the trades already here",
+"pisa.txt":"Opening this data overwrites the trades in this browser. Save the encrypted file first if you want to keep them.",
 "g.res":"trade result","g.resMes":"monthly average","g.f":"F TRADER","g.wl":"wins / losses","g.ejeDia":"date","g.ejeMes":"month","g.inicio":"start",
 "g.ejeRes":"trade\nresult","g.ejeResMes":"monthly\naverage",
 "g.pista":"Click or drag across the chart to read a period.",
@@ -853,6 +857,8 @@ const migra = t => ({...t, par:t.par || "USDT", posicion:t.posicion || "LONG",
                      // Rows saved before the ceiling existed are brought under it.
                      x: t.x !== "" && t.x !== undefined && +t.x > X_MAX ? X_MAX : t.x,
                      ml:limpiaOrden(t.ml), lm:limpiaOrden(t.lm)});
+// Only known settings: a file or link is untrusted, and "__proto__" would replace cfg's prototype.
+const cfgConocida = d => Object.fromEntries(Object.keys(cfg).filter(k => d && Object.hasOwn(d, k)).map(k => [k, d[k]]));
 
 
 /* ======================================================================
@@ -885,7 +891,8 @@ function aplicarIdioma(){
   }
   if(typeof pintarMeses === "function" && $("mes")) pintarMeses();
   if(typeof aplicarTema === "function") aplicarTema();
-  if(typeof render === "function" && $("tbody")){ render(); refresh(); }
+  // At startup nothing is loaded yet: refresh() would save the empty list over the journal.
+  if(trades.length && typeof render === "function" && $("tbody")){ render(); refresh(); }
 }
 
 /* ---------- render ---------- */
@@ -1880,10 +1887,19 @@ function pedirPass({titulo, ayuda, confirmar: conf = false, ofrecerLimpiar = fal
 const snapshot = () => ({v:1, cfg, trades: trades.filter(empezada)});
 
 
+// Opening a file or link replaces the journal: anything real gets confirmed first.
+async function aceptaPisar(){
+  const g = leerLocal();
+  return !(g && Array.isArray(g.trades) && g.trades.some(empezada)) || confirmar(txt("pisa.h"), txt("pisa.txt"));
+}
+
 function aplicar(d){
   if(!d || !Array.isArray(d.trades)) throw new Error("formato inválido");
   trades = d.trades.map(migra);
-  Object.assign(cfg, d.cfg || {});
+  const locale = cfg.locale;
+  Object.assign(cfg, cfgConocida(d.cfg));
+  // Intl throws on an unknown locale, which would stop the page from rendering.
+  if(![...$("locale").options].some(o => o.value === cfg.locale)) cfg.locale = locale;
   ordenar(); sincronizarCfg(); colocarCfg(); pintarMeses(); render(); refresh();
 }
 
@@ -1928,7 +1944,10 @@ $("file").onchange = async e => {
   const r = await pedirPass({titulo:txt("p.cargar"), ayuda:txt("p.cargarTxt")});
   if(!r) return;
   await ocupado($("load"), async () => {
-    try{ aplicar(await descifrar(datos, r.pass)); }
+    try{
+      const d = await descifrar(datos, r.pass);
+      if(await aceptaPisar()) aplicar(d);
+    }
     catch{ aviso(txt("e.noAbre"), txt("e.noAbreTxt")); }
   });
 };
@@ -2033,9 +2052,12 @@ async function init(){
     const r = await pedirPass({titulo:txt("p.abrir"), ayuda:txt("p.abrirTxt")});
     if(r){
       try{
-        aplicar(await descifrar(hash[1], r.pass));
-        history.replaceState(null, "", location.pathname);
-        return;
+        const d = await descifrar(hash[1], r.pass);
+        if(await aceptaPisar()){
+          aplicar(d);
+          history.replaceState(null, "", location.pathname);
+          return;
+        }
       }catch{ await aviso(txt("e.noAbre"), txt("e.noAbreTxt")); }
     }
   }
@@ -2046,7 +2068,7 @@ async function init(){
   // examples back from the dead.
   if(guardado && Array.isArray(guardado.trades)){
     trades = guardado.trades.map(migra);
-    Object.assign(cfg, guardado.cfg || {});
+    Object.assign(cfg, cfgConocida(guardado.cfg));
     // An early save could carry locale:"" and leave the picker blank.
     if(![...sel.options].some(o => o.value === cfg.locale)) cfg.locale = lista[0];
     if(!trades.length) trades = [nuevo()];

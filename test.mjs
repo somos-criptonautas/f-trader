@@ -25,7 +25,7 @@ function puro() {
   return app.slice(0, i) + `
     export {calcRow, stats, avisos, ratio, nuevo, EJEMPLOS, cifrar, descifrar, dmyAIso, isoADmy,
             migra, parChoca, dirMal, faltantes, empezada, aNumero, aModelo, aPantalla, num,
-            fmtPct, fmtMes, mesDe, isoADm, cfg,
+            fmtPct, fmtMes, mesDe, isoADm, cfg, cfgConocida,
             filasPegadas, numPegado, fechaPegada, campoDe, esCabecera, importar,
             decimalDe, diaPrimeroDe, ORDEN, serie, escala, indicesX, resumen, demoTrades, demoPedido};`;
 }
@@ -33,7 +33,7 @@ function puro() {
 const M = await import("data:text/javascript," + encodeURIComponent(puro()));
 const { calcRow, stats, avisos, ratio, nuevo, EJEMPLOS, cifrar, descifrar, dmyAIso, isoADmy,
         migra, parChoca, dirMal, faltantes, empezada, aNumero, aModelo, aPantalla, num,
-        fmtPct, fmtMes, mesDe, isoADm, cfg,
+        fmtPct, fmtMes, mesDe, isoADm, cfg, cfgConocida,
         filasPegadas, numPegado, fechaPegada, campoDe, esCabecera, importar,
         decimalDe, diaPrimeroDe, ORDEN, serie, escala, indicesX, resumen, demoTrades, demoPedido } = M;
 
@@ -185,6 +185,10 @@ ok("apalancamiento vacío sigue vacío", migra({ x: "" }).x === "");
 ok("no pisa un PAR existente", migra({ par: "BTC" }).par === "BTC");
 ok('"LIMIT (*)" -> LIMIT', migra({ ml: "LIMIT (*)" }).ml === "LIMIT");
 ok("POSICION vacía -> LONG", migra({}).posicion === "LONG");
+ok("el arranque no guarda la lista vacía encima del diario", app.includes('if(trades.length && typeof render === "function"'));
+const cfgAjena = cfgConocida(JSON.parse('{"__proto__":{"listo":true},"margen":"inverso","otra":1}'));
+ok("config de un enlace: sólo claves conocidas", Object.keys(cfgAjena).join() === "margen" && Object.getPrototypeOf(cfgAjena) === Object.prototype);
+ok("config ausente no rompe", Object.keys(cfgConocida(undefined)).length === 0);
 
 grupo("Encryption");
 const datos = { v: 1, cfg: sinFee, trades: EJEMPLOS };
